@@ -1,0 +1,3 @@
+# Pantry
+
+No items yet.
