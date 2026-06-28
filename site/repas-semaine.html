@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Repas de la semaine - 2026-W26</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f5ef;
+      --paper: #ffffff;
+      --ink: #172026;
+      --muted: #657078;
+      --line: #dad5ca;
+      --accent: #0f766e;
+      --accent-soft: #d8f3ee;
+      --warm: #f4b860;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(247, 245, 239, 0.96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+    .bar, main {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      padding: 16px;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 4px; font-size: 28px; line-height: 1.15; }
+    h2 { margin-bottom: 0; font-size: 24px; line-height: 1.2; }
+    h3 { margin-bottom: 12px; font-size: 18px; }
+    .subtitle { margin: 0 0 12px; color: var(--muted); font-size: 14px; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .actions a, .small-action, .top-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .actions a.secondary, .small-action, .top-link {
+      background: white;
+      color: var(--accent);
+    }
+    .agenda {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
+      margin: 12px 0 24px;
+    }
+    .agenda-card {
+      min-height: 150px;
+      display: grid;
+      align-content: start;
+      gap: 7px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--warm);
+      border-radius: 8px;
+      background: var(--paper);
+      color: inherit;
+      text-decoration: none;
+    }
+    .agenda-card strong { font-size: 18px; line-height: 1.25; }
+    .agenda-card small, .agenda-card span:not(.day) { color: var(--muted); }
+    .day, .eyebrow {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    .recipe-card {
+      margin: 0 0 18px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+    .recipe-heading {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .pill {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #164e46;
+      font-size: 14px;
+    }
+    .notes { color: var(--muted); }
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+      gap: 22px;
+      align-items: start;
+    }
+    .ingredients, .method { margin: 0; padding-left: 22px; }
+    .ingredients li {
+      margin: 0 0 9px;
+      padding-bottom: 9px;
+      border-bottom: 1px solid #ece7dc;
+    }
+    .ingredients span, .ingredients strong, .ingredients small {
+      display: block;
+    }
+    .ingredients strong { color: var(--accent); }
+    .ingredients small { color: var(--muted); }
+    .method li { margin-bottom: 12px; padding-left: 4px; }
+    .missing {
+      padding: 12px;
+      border: 1px solid #f59e0b;
+      border-radius: 8px;
+      background: #fffbeb;
+    }
+    @media (max-width: 720px) {
+      .bar, main { padding: 14px; }
+      h1 { font-size: 25px; }
+      .recipe-card { padding: 15px; }
+      .recipe-heading { align-items: stretch; }
+      .small-action { min-width: 72px; }
+      .recipe-grid { grid-template-columns: 1fr; gap: 18px; }
+      .agenda { grid-template-columns: 1fr; }
+      .agenda-card { min-height: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header id="top">
+    <div class="bar">
+      <h1>Repas de la semaine - 2026-W26</h1>
+      <p class="subtitle">Plan source: data/plans/2026-W26.md</p>
+      <nav class="actions" aria-label="Liens rapides">
+        <a href="liste-epicerie.html">Liste d'epicerie</a>
+        <a class="secondary" href="#recettes">Recettes</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section aria-labelledby="agenda-title">
+      <h2 id="agenda-title">Agenda</h2>
+      <div class="agenda">
+        
+            <a class="agenda-card" href="#recipe-e538676633">
+              <span class="day">Jour 1</span>
+              <strong>Bols de poulet citron et riz</strong>
+              <span>Concombres et tomates</span>
+              <small>20 min actif; OK; existant</small>
+            </a>
+            
+
+            <a class="agenda-card" href="#recipe-8bcf937612">
+              <span class="day">Jour 2</span>
+              <strong>Tacos de boeuf et haricots</strong>
+              <span>Crudites</span>
+              <small>25 min actif; OK; existant</small>
+            </a>
+            
+
+            <a class="agenda-card" href="#recipe-e72a26aac4">
+              <span class="day">Jour 3</span>
+              <strong>Poulet BBQ, pommes de terre et salade</strong>
+              <span>aucun</span>
+              <small>20 min actif; OK; existant</small>
+            </a>
+            
+
+            <a class="agenda-card" href="#recipe-771100cec8">
+              <span class="day">Jour 4</span>
+              <strong>Frittata jambon fromage</strong>
+              <span>Legumes de saison, Riz, pommes de terre ou pain</span>
+              <small>15 min actif; OK; existant</small>
+            </a>
+            
+
+            <a class="agenda-card" href="#recipe-2d8c6b8fdb">
+              <span class="day">Jour 5</span>
+              <strong>Pates bacon, poivrons et petits pois</strong>
+              <span>aucun</span>
+              <small>25 min actif; OK; nouveau</small>
+            </a>
+            
+      </div>
+    </section>
+    <section id="recettes" aria-labelledby="recipes-title">
+      <h2 id="recipes-title">Recettes completes</h2>
+      
+    <section class="recipe-card" id="recipe-e538676633">
+      <div class="recipe-heading">
+        <div>
+          <p class="eyebrow">Jour 1</p>
+          <h2>Bols de poulet citron et riz</h2>
+        </div>
+        <a class="small-action" href="#top">Plan</a>
+      </div>
+      <div class="meta-row">
+        <span class="pill"><strong>Portions</strong> 4</span>
+<span class="pill"><strong>Actif</strong> 20</span>
+<span class="pill"><strong>Prep</strong> 15</span>
+<span class="pill"><strong>Cuisson</strong> 25</span>
+        <span class="pill"><strong>Accompagnement</strong> Concombres et tomates</span>
+      </div>
+      <p class="notes">20 min actif; OK; existant</p>
+      <div class="recipe-grid">
+        <div>
+          <h3>Ingredients</h3>
+          <ul class="ingredients">
+            <li><span>poitrines de poulet</span><strong>700 g</strong><small>Viandes et poissons</small></li>
+<li><span>riz basmati</span><strong>2 tasses</strong><small>Epicerie seche</small></li>
+<li><span>concombres</span><strong>2</strong><small>Fruits et legumes</small></li>
+<li><span>tomates cerises</span><strong>1 chopine</strong><small>Fruits et legumes</small></li>
+<li><span>citron</span><strong>1</strong><small>Fruits et legumes</small></li>
+<li><span>yogourt grec</span><strong>1 tasse</strong><small>Produits laitiers</small></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Methode</h3>
+          <ol class="method">
+            <li>Lancer le riz basmati en premier selon les instructions du paquet. Pendant qu&#x27;il cuit, couper les concombres et les tomates cerises, puis reserver au frais.</li>
+<li>Zester ou presser le citron. Melanger le yogourt grec avec une partie du jus de citron, une pincee de sel et du poivre pour faire une sauce rapide.</li>
+<li>Couper le poulet en lanieres ou en cubes de taille reguliere. Assaisonner avec sel, poivre et un peu de jus de citron.</li>
+<li>Cuire le poulet dans une poele chaude avec un filet d&#x27;huile, 5 a 7 minutes par cote ou jusqu&#x27;a ce qu&#x27;il soit bien cuit et dore.</li>
+<li>Repartir le riz dans les bols, ajouter le poulet, les concombres, les tomates et la sauce au yogourt citron.</li>
+<li>Pour les lunchs, refroidir le riz et le poulet avant d&#x27;assembler les portions. Garder la sauce a part pour eviter que le bol devienne detrempe.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="recipe-card" id="recipe-8bcf937612">
+      <div class="recipe-heading">
+        <div>
+          <p class="eyebrow">Jour 2</p>
+          <h2>Tacos de boeuf et haricots</h2>
+        </div>
+        <a class="small-action" href="#top">Plan</a>
+      </div>
+      <div class="meta-row">
+        <span class="pill"><strong>Portions</strong> 4</span>
+<span class="pill"><strong>Actif</strong> 25</span>
+<span class="pill"><strong>Prep</strong> 15</span>
+<span class="pill"><strong>Cuisson</strong> 15</span>
+        <span class="pill"><strong>Accompagnement</strong> Crudites</span>
+      </div>
+      <p class="notes">25 min actif; OK; existant</p>
+      <div class="recipe-grid">
+        <div>
+          <h3>Ingredients</h3>
+          <ul class="ingredients">
+            <li><span>boeuf hache</span><strong>600 g</strong><small>Viandes et poissons</small></li>
+<li><span>epices a tacos</span><strong>1 sachet</strong><small>Epicerie seche</small></li>
+<li><span>tortillas</span><strong>10</strong><small>Boulangerie</small></li>
+<li><span>haricots noirs</span><strong>1 conserve</strong><small>Epicerie seche</small></li>
+<li><span>laitue</span><strong>1</strong><small>Fruits et legumes</small></li>
+<li><span>salsa</span><strong>1 pot</strong><small>Condiments</small></li>
+<li><span>fromage rape</span><strong>2 tasses</strong><small>Produits laitiers</small></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Methode</h3>
+          <ol class="method">
+            <li>Preparer les garnitures avant de cuire la viande: couper la laitue, ouvrir les haricots noirs, sortir la salsa et le fromage rape.</li>
+<li>Dans une grande poele, cuire le boeuf hache a feu moyen-vif en le defaisant a la cuillere jusqu&#x27;a ce qu&#x27;il ne reste plus de rose.</li>
+<li>Egoutter l&#x27;excedent de gras au besoin, puis ajouter les epices a tacos et un petit fond d&#x27;eau. Laisser mijoter 2 a 3 minutes pour bien enrober la viande.</li>
+<li>Ajouter les haricots noirs egouttes dans la poele et rechauffer 2 minutes. Gouter et ajuster l&#x27;assaisonnement.</li>
+<li>Rechauffer les tortillas quelques secondes au micro-ondes ou dans une poele seche pour les rendre souples.</li>
+<li>Servir en mode assemblage: tortillas, boeuf aux haricots, laitue, salsa et fromage rape. Garder une partie de la garniture viande-haricots pour les wraps froids du lendemain.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="recipe-card" id="recipe-e72a26aac4">
+      <div class="recipe-heading">
+        <div>
+          <p class="eyebrow">Jour 3</p>
+          <h2>Poulet BBQ, pommes de terre et salade</h2>
+        </div>
+        <a class="small-action" href="#top">Plan</a>
+      </div>
+      <div class="meta-row">
+        <span class="pill"><strong>Portions</strong> 4</span>
+<span class="pill"><strong>Actif</strong> 20</span>
+<span class="pill"><strong>Prep</strong> 15</span>
+<span class="pill"><strong>Cuisson</strong> 30</span>
+        <span class="pill"><strong>Accompagnement</strong> aucun</span>
+      </div>
+      <p class="notes">20 min actif; OK; existant</p>
+      <div class="recipe-grid">
+        <div>
+          <h3>Ingredients</h3>
+          <ul class="ingredients">
+            <li><span>hauts de cuisse de poulet</span><strong>8</strong><small>Viandes et poissons</small></li>
+<li><span>sauce BBQ</span><strong>1/2 tasse</strong><small>Condiments</small></li>
+<li><span>pommes de terre</span><strong>800 g</strong><small>Fruits et legumes</small></li>
+<li><span>melange salade</span><strong>1 sac</strong><small>Fruits et legumes</small></li>
+<li><span>vinaigrette</span><strong>1/4 tasse</strong><small>Condiments</small></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Methode</h3>
+          <ol class="method">
+            <li>Couper les pommes de terre en morceaux de taille semblable. Les melanger avec huile, sel et poivre, puis commencer la cuisson au four ou sur le BBQ.</li>
+<li>Badigeonner les hauts de cuisse avec une partie de la sauce BBQ. Garder un peu de sauce propre pour la fin de cuisson.</li>
+<li>Cuire le poulet au BBQ ou au four jusqu&#x27;a ce qu&#x27;il soit bien cuit et caramelise, en le retournant a mi-cuisson.</li>
+<li>Ajouter la derniere couche de sauce BBQ dans les 5 dernieres minutes pour eviter qu&#x27;elle brule.</li>
+<li>Pendant que le poulet repose, melanger la salade avec la vinaigrette juste avant de servir.</li>
+<li>Pour les lunchs, reserver du poulet coupe et des pommes de terre refroidies. Emballer la salade ou les crudites a part.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="recipe-card" id="recipe-771100cec8">
+      <div class="recipe-heading">
+        <div>
+          <p class="eyebrow">Jour 4</p>
+          <h2>Frittata jambon fromage</h2>
+        </div>
+        <a class="small-action" href="#top">Plan</a>
+      </div>
+      <div class="meta-row">
+        <span class="pill"><strong>Portions</strong> 4</span>
+<span class="pill"><strong>Actif</strong> 15</span>
+<span class="pill"><strong>Prep</strong> 10</span>
+<span class="pill"><strong>Cuisson</strong> 20</span>
+        <span class="pill"><strong>Accompagnement</strong> Legumes de saison, Riz, pommes de terre ou pain</span>
+      </div>
+      <p class="notes">15 min actif; OK; existant</p>
+      <div class="recipe-grid">
+        <div>
+          <h3>Ingredients</h3>
+          <ul class="ingredients">
+            <li><span>oeufs</span><strong>10</strong><small>Produits laitiers</small></li>
+<li><span>jambon</span><strong>250 g</strong><small>Viandes et poissons</small></li>
+<li><span>fromage suisse</span><strong>1 tasse</strong><small>Produits laitiers</small></li>
+<li><span>lait</span><strong>1/2 tasse</strong><small>Produits laitiers</small></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Methode</h3>
+          <ol class="method">
+            <li>Prechauffer le four a 375 F. Graisser un plat allant au four ou une grande poele allant au four.</li>
+<li>Couper le jambon en petits des et raper ou mesurer le fromage suisse.</li>
+<li>Dans un grand bol, fouetter les oeufs avec le lait, une pincee de sel et du poivre jusqu&#x27;a ce que le melange soit uniforme.</li>
+<li>Repartir le jambon et le fromage dans le plat, puis verser les oeufs par-dessus.</li>
+<li>Cuire 18 a 22 minutes, jusqu&#x27;a ce que le centre soit pris et que les bords commencent a dorer.</li>
+<li>Laisser reposer 5 minutes avant de couper. Pour les lunchs enfants, refroidir completement et mettre en sandwich ou en portions froides.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="recipe-card" id="recipe-2d8c6b8fdb">
+      <div class="recipe-heading">
+        <div>
+          <p class="eyebrow">Jour 5</p>
+          <h2>Pates bacon, poivrons et petits pois</h2>
+        </div>
+        <a class="small-action" href="#top">Plan</a>
+      </div>
+      <div class="meta-row">
+        <span class="pill"><strong>Portions</strong> 4</span>
+<span class="pill"><strong>Actif</strong> 25</span>
+<span class="pill"><strong>Prep</strong> 10</span>
+<span class="pill"><strong>Cuisson</strong> 20</span>
+        <span class="pill"><strong>Accompagnement</strong> aucun</span>
+      </div>
+      <p class="notes">25 min actif; OK; nouveau</p>
+      <div class="recipe-grid">
+        <div>
+          <h3>Ingredients</h3>
+          <ul class="ingredients">
+            <li><span>bacon</span><strong>250 g</strong><small>Viandes et poissons</small></li>
+<li><span>pates courtes</span><strong>450 g</strong><small>Epicerie seche</small></li>
+<li><span>poivrons</span><strong>2</strong><small>Fruits et legumes</small></li>
+<li><span>petits pois</span><strong>1 tasse</strong><small>Surgeles</small></li>
+<li><span>creme</span><strong>1 tasse</strong><small>Produits laitiers</small></li>
+<li><span>parmesan</span><strong>1/2 tasse</strong><small>Produits laitiers</small></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Methode</h3>
+          <ol class="method">
+            <li>Cuire les pates et reserver un peu d&#x27;eau de cuisson.</li>
+<li>Faire revenir le bacon et les poivrons.</li>
+<li>Ajouter les petits pois, la creme, le parmesan et un peu d&#x27;eau de cuisson.</li>
+<li>Melanger avec les pates et ajuster l&#x27;assaisonnement.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+    
+    </section>
+  </main>
+</body>
+</html>

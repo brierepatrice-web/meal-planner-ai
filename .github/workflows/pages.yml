@@ -1,4 +1,4 @@
-name: Deploy grocery list
+name: Deploy meal planner site
 
 on:
   push:
@@ -30,6 +30,9 @@ jobs:
 
       - name: Generate grocery HTML
         run: python scripts/generate_grocery_html.py --plan data/plans/2026-W26.md --out site/liste-epicerie.html
+
+      - name: Generate meal plan HTML
+        run: python scripts/generate_meal_plan_html.py --plan data/plans/2026-W26.md --out site/repas-semaine.html
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

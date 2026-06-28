@@ -33,6 +33,7 @@ LAYOUT = {
     "activeRecipes": (7, 3),
     "grocery": (7, 4),
     "groceryHtml": (8, 4),
+    "mealHtml": (8, 1),
     "consumed": (8, 2),
     "consume": (9, 2),
     "historyUpdate": (10, 1),
