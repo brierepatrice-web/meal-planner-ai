@@ -27,7 +27,7 @@ Par defaut, `plan_week.py` genere un brouillon pour la semaine courante dans `da
 
 Quand le brouillon est approuve, `commit_plan.py` publie le plan dans `data/plans/`, active les recettes nouvelles approuvees dans `data/recipes/mains/`, puis genere la liste d'epicerie dans `data/grocery_lists/`.
 
-Sur demande, `generate_grocery_html.py` genere une version HTML mobile et interactive de la liste d'epicerie dans `data/grocery_lists_html/`. Ce fichier peut ensuite etre uploade sur Google Drive comme fichier `.html` brut, sans conversion Google Docs, et ouvert dans le navigateur du telephone.
+Sur demande, `generate_grocery_html.py` genere une version HTML mobile et interactive de la liste d'epicerie dans `data/grocery_lists_html/`.
 
 Pour publier la liste sur GitHub Pages, generer le fichier stable avec:
 
@@ -82,7 +82,6 @@ flowchart TD
     activeRecipes["data/recipes/mains/<br/>Recettes pending activees"]
     grocery["data/grocery_lists/{week}.md<br/>Liste d'epicerie generee"]
     groceryHtml["data/grocery_lists_html/{week}.html<br/>Liste mobile interactive"]
-    driveHtml["Google Drive<br/>liste-epicerie.html"]
     consumed{"Plan consomme?"}
     consume["scripts/consume_plan.py<br/>Marque le plan comme consomme"]
     historyUpdate["data/history/<br/>Historique mis a jour"]
@@ -119,7 +118,6 @@ flowchart TD
     commit --> activeRecipes
     commit --> grocery
     grocery --> groceryHtml
-    groceryHtml --> driveHtml
     planOut --> consumed
     consumed -- non --> planOut
     consumed -- oui --> consume
