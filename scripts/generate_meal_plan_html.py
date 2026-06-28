@@ -77,7 +77,7 @@ def render_recipe(recipe: dict | None, dinner: dict) -> str:
             </div>
           </div>
           <p class="missing">Recette introuvable dans la banque active ou pending.</p>
-          <a class="top-link" href="#top">Retour en haut</a>
+          <a class="top-link" href="#agenda">Retour au plan</a>
         </section>
         """
 
@@ -106,7 +106,7 @@ def render_recipe(recipe: dict | None, dinner: dict) -> str:
           <p class="eyebrow">{esc(dinner["day"])}</p>
           <h2>{esc(title)}</h2>
         </div>
-        <a class="small-action" href="#top">Plan</a>
+        <a class="small-action" href="#agenda">Plan</a>
       </div>
       <div class="meta-row">
         {meta}
@@ -255,6 +255,9 @@ def render_html(plan_path: Path) -> str:
       gap: 10px;
       margin: 12px 0 24px;
     }}
+    #agenda, .recipe-card {{
+      scroll-margin-top: 150px;
+    }}
     .agenda-card {{
       min-height: 150px;
       display: grid;
@@ -352,7 +355,7 @@ def render_html(plan_path: Path) -> str:
     </div>
   </header>
   <main>
-    <section aria-labelledby="agenda-title">
+    <section id="agenda" aria-labelledby="agenda-title">
       <h2 id="agenda-title">Agenda</h2>
       <div class="agenda">
         {render_agenda(dinners)}
