@@ -201,8 +201,7 @@ def render_html(plan_path: Path) -> str:
     h2 {{ margin-bottom: 0; font-size: 24px; line-height: 1.2; }}
     h3 {{ margin-bottom: 12px; font-size: 18px; }}
     .subtitle {{ margin: 0 0 12px; color: var(--muted); font-size: 14px; }}
-    .actions {{ display: flex; gap: 10px; flex-wrap: wrap; }}
-    .actions a, .small-action, .top-link {{
+    .small-action, .top-link {{
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -215,7 +214,7 @@ def render_html(plan_path: Path) -> str:
       font-weight: 700;
       text-decoration: none;
     }}
-    .actions a.secondary, .small-action, .top-link {{
+    .small-action, .top-link {{
       background: white;
       color: var(--accent);
     }}
@@ -350,10 +349,6 @@ def render_html(plan_path: Path) -> str:
     <div class="bar">
       <h1>Repas de la semaine - {esc(week)}</h1>
       <p class="subtitle">Plan source: {esc(plan_path.as_posix())}</p>
-      <nav class="actions" aria-label="Liens rapides">
-        <a href="liste-epicerie.html">Liste d'epicerie</a>
-        <a class="secondary" href="#recettes">Recettes</a>
-      </nav>
     </div>
   </header>
   <main>
