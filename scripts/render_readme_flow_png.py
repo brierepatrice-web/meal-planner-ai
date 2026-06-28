@@ -34,6 +34,7 @@ LAYOUT = {
     "grocery": (7, 4),
     "groceryHtml": (8, 4),
     "mealHtml": (8, 1),
+    "inventoryHtml": (8, 6),
     "consumed": (8, 2),
     "consume": (9, 2),
     "historyUpdate": (10, 1),

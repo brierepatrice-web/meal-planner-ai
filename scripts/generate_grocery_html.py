@@ -173,7 +173,7 @@ def render_html(payload: dict) -> str:
       bottom: calc(10px + env(safe-area-inset-bottom));
       z-index: 20;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
       width: min(760px, calc(100% - 24px));
       margin: 0 auto;
@@ -291,6 +291,7 @@ def render_html(payload: dict) -> str:
   <nav class="quick-nav" aria-label="Navigation mobile">
     <a class="active" href="liste-epicerie.html">Epicerie</a>
     <a href="repas-semaine.html">Repas</a>
+    <a href="inventaire.html">Inventaire</a>
   </nav>
   <script type="application/json" id="groceryData">{escaped_payload}</script>
   <script>

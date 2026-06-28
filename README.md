@@ -21,6 +21,8 @@ python scripts\generate_grocery_html.py
 python scripts\generate_grocery_html.py --plan data\plans\2026-W26.md --out site\liste-epicerie.html
 python scripts\generate_meal_plan_html.py
 python scripts\generate_meal_plan_html.py --plan data\plans\2026-W26.md --out site\repas-semaine.html
+python scripts\generate_inventory_html.py
+python scripts\generate_inventory_html.py --out site\inventaire.html
 python scripts\score_plan.py
 python scripts\consume_plan.py
 ```
@@ -33,18 +35,22 @@ Sur demande, `generate_grocery_html.py` genere une version HTML mobile et intera
 
 Sur demande, `generate_meal_plan_html.py` genere une version HTML mobile du plan de repas avec l'agenda de la semaine, les ingredients et les methodes des recettes dans `data/meal_plan_html/`.
 
+Sur demande, `generate_inventory_html.py` genere une version HTML mobile en lecture seule de l'inventaire dans `data/inventory_html/`.
+
 Pour publier les pages sur GitHub Pages, generer les fichiers stables avec:
 
 ```powershell
 python scripts\generate_grocery_html.py --plan data\plans\2026-W26.md --out site\liste-epicerie.html
 python scripts\generate_meal_plan_html.py --plan data\plans\2026-W26.md --out site\repas-semaine.html
+python scripts\generate_inventory_html.py --out site\inventaire.html
 ```
 
-Le workflow GitHub Actions `.github/workflows/pages.yml` regenere et publie `site/liste-epicerie.html` et `site/repas-semaine.html` sur GitHub Pages a chaque push vers `master` ou `main`. Les URL attendues sont:
+Le workflow GitHub Actions `.github/workflows/pages.yml` regenere et publie `site/liste-epicerie.html`, `site/repas-semaine.html` et `site/inventaire.html` sur GitHub Pages a chaque push vers `master` ou `main`. Les URL attendues sont:
 
 ```text
 https://<github-user>.github.io/meal-planner-ai/liste-epicerie.html
 https://<github-user>.github.io/meal-planner-ai/repas-semaine.html
+https://<github-user>.github.io/meal-planner-ai/inventaire.html
 ```
 
 Les plans utilisent cinq positions flexibles (`Jour 1` a `Jour 5`) plutot que des jours fixes comme lundi a vendredi. L'utilisateur peut ensuite assigner chaque repas au vrai jour qui convient.
@@ -89,6 +95,7 @@ flowchart TD
     grocery["data/grocery_lists/{week}.md<br/>Liste d'epicerie generee"]
     groceryHtml["data/grocery_lists_html/{week}.html<br/>Liste mobile interactive"]
     mealHtml["site/repas-semaine.html<br/>Repas et recettes"]
+    inventoryHtml["site/inventaire.html<br/>Inventaire mobile"]
     consumed{"Plan consomme?"}
     consume["scripts/consume_plan.py<br/>Marque le plan comme consomme"]
     historyUpdate["data/history/<br/>Historique mis a jour"]
@@ -127,6 +134,7 @@ flowchart TD
     grocery --> groceryHtml
     planOut --> mealHtml
     recipes -. lecture seulement .-> mealHtml
+    inventory -. lecture seulement .-> inventoryHtml
     planOut --> consumed
     consumed -- non --> planOut
     consumed -- oui --> consume
