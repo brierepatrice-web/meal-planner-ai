@@ -165,7 +165,38 @@ def render_html(payload: dict) -> str:
     main {{
       max-width: 760px;
       margin: 0 auto;
-      padding: 14px 12px 28px;
+      padding: 14px 12px 98px;
+    }}
+    .quick-nav {{
+      position: fixed;
+      left: 50%;
+      bottom: calc(10px + env(safe-area-inset-bottom));
+      z-index: 20;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      width: min(760px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      transform: translateX(-50%);
+    }}
+    .quick-nav a {{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border-radius: 8px;
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+    }}
+    .quick-nav a.active {{
+      background: var(--accent);
+      color: white;
     }}
     section {{
       margin: 0 0 14px;
@@ -257,6 +288,10 @@ def render_html(payload: dict) -> str:
       </div>
     </section>
   </main>
+  <nav class="quick-nav" aria-label="Navigation mobile">
+    <a class="active" href="liste-epicerie.html">Epicerie</a>
+    <a href="repas-semaine.html">Repas</a>
+  </nav>
   <script type="application/json" id="groceryData">{escaped_payload}</script>
   <script>
     const data = JSON.parse(document.getElementById("groceryData").textContent);

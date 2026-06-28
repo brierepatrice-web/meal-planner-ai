@@ -195,6 +195,7 @@ def render_html(plan_path: Path) -> str:
       margin: 0 auto;
       padding: 16px;
     }}
+    main {{ padding-bottom: 98px; }}
     h1, h2, h3, p {{ margin-top: 0; }}
     h1 {{ margin-bottom: 4px; font-size: 28px; line-height: 1.15; }}
     h2 {{ margin-bottom: 0; font-size: 24px; line-height: 1.2; }}
@@ -217,6 +218,37 @@ def render_html(plan_path: Path) -> str:
     .actions a.secondary, .small-action, .top-link {{
       background: white;
       color: var(--accent);
+    }}
+    .quick-nav {{
+      position: fixed;
+      left: 50%;
+      bottom: calc(10px + env(safe-area-inset-bottom));
+      z-index: 20;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      width: min(760px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.12);
+      transform: translateX(-50%);
+    }}
+    .quick-nav a {{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border-radius: 8px;
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+    }}
+    .quick-nav a.active {{
+      background: var(--accent);
+      color: white;
     }}
     .agenda {{
       display: grid;
@@ -336,6 +368,10 @@ def render_html(plan_path: Path) -> str:
       {recipe_sections}
     </section>
   </main>
+  <nav class="quick-nav" aria-label="Navigation mobile">
+    <a href="liste-epicerie.html">Epicerie</a>
+    <a class="active" href="repas-semaine.html">Repas</a>
+  </nav>
 </body>
 </html>
 """
