@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Liste d&#x27;epicerie - 2026-W26</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #172033;
+      --muted: #647084;
+      --line: #d9dee8;
+      --accent: #0f766e;
+      --accent-soft: #d9f3ef;
+      --done: #eef1f5;
+      --shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.35;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      padding: 14px 16px 12px;
+      box-shadow: var(--shadow);
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 14px 12px 28px;
+    }
+    section {
+      margin: 0 0 14px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    h2 {
+      margin: 0;
+      padding: 12px 14px;
+      font-size: 17px;
+      background: #fafbfc;
+      border-bottom: 1px solid var(--line);
+      letter-spacing: 0;
+    }
+    .list {
+      display: grid;
+      gap: 0;
+    }
+    .item {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      min-height: 54px;
+      padding: 10px 14px;
+      background: var(--panel);
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--text);
+      text-align: left;
+      font: inherit;
+    }
+    .item:last-child { border-bottom: 0; }
+    .item input {
+      width: 24px;
+      height: 24px;
+      accent-color: var(--accent);
+    }
+    .item-label {
+      overflow-wrap: anywhere;
+    }
+    .tag {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #115e59;
+      font-size: 12px;
+      vertical-align: middle;
+    }
+    .empty, .inventory-item {
+      padding: 12px 14px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--line);
+    }
+    .inventory-item:last-child { border-bottom: 0; }
+    .done-section .item {
+      background: var(--done);
+      color: var(--muted);
+    }
+    .done-section .item-label {
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Liste d&#x27;epicerie - 2026-W26</h1>
+    <div class="meta">
+      <span>Source: 2026-W26.md</span>
+      <strong id="remainingCount">37 restants</strong>
+    </div>
+  </header>
+  <main>
+    <div id="inventory">
+    <section>
+      <h2>Deja dans l'inventaire</h2>
+        <div class="inventory-item">bacon</div>
+        <div class="inventory-item">boeuf hache</div>
+    </section>
+    </div>
+    <div id="shopping">
+    <section>
+      <h2>Fruits et legumes</h2>
+      <div class="list">
+        <label class="item" data-id="58293688ca98" data-category="Fruits et legumes"><input type="checkbox" data-static="true"><span class="item-label">concombres (2)</span></label>
+        <label class="item" data-id="15e014ae10c0" data-category="Fruits et legumes"><input type="checkbox" data-static="true"><span class="item-label">tomates cerises (1 chopine)</span></label>
+        <label class="item" data-id="126128c8cdf2" data-category="Fruits et legumes"><input type="checkbox" data-static="true"><span class="item-label">citron (1)</span></label>
+        <label class="item" data-id="9960f2c0af4d" data-category="Fruits et legumes"><input type="checkbox" data-static="true"><span class="item-label">laitue (1)</span></label>
+        <label class="item" data-id="fea39350d018" data-category="Fruits et legumes"><input type="checkbox" data-static="true"><span class="item-label">pommes de terre (800 g)</span></label>
+        <label class="item" data-id="7c362cd3c9e8" data-category="Fruits et legumes"><input type="checkbox" data-static="true"><span class="item-label">melange salade (1 sac)</span></label>
+        <label class="item" data-id="47065037308c" data-category="Fruits et legumes"><input type="checkbox" data-static="true"><span class="item-label">poivrons (2)</span></label>
+        <label class="item" data-id="108a02ef3556" data-category="Fruits et legumes"><input type="checkbox" data-static="true"><span class="item-label">fruits (au besoin)<span class="tag">recurrent</span></span></label>
+      </div>
+    </section>
+    <section>
+      <h2>Viandes et poissons</h2>
+      <div class="list">
+        <label class="item" data-id="f0b05b6584ba" data-category="Viandes et poissons"><input type="checkbox" data-static="true"><span class="item-label">poitrines de poulet (700 g)</span></label>
+        <label class="item" data-id="41e3aafb97c4" data-category="Viandes et poissons"><input type="checkbox" data-static="true"><span class="item-label">hauts de cuisse de poulet (8)</span></label>
+        <label class="item" data-id="cc0d820ae988" data-category="Viandes et poissons"><input type="checkbox" data-static="true"><span class="item-label">jambon (250 g)</span></label>
+      </div>
+    </section>
+    <section>
+      <h2>Produits laitiers</h2>
+      <div class="list">
+        <label class="item" data-id="d619d478414a" data-category="Produits laitiers"><input type="checkbox" data-static="true"><span class="item-label">yogourt grec (1 tasse)</span></label>
+        <label class="item" data-id="59050e4e2001" data-category="Produits laitiers"><input type="checkbox" data-static="true"><span class="item-label">fromage rape (2 tasses)</span></label>
+        <label class="item" data-id="ef9378f33557" data-category="Produits laitiers"><input type="checkbox" data-static="true"><span class="item-label">oeufs (10)</span></label>
+        <label class="item" data-id="2503e1250b67" data-category="Produits laitiers"><input type="checkbox" data-static="true"><span class="item-label">fromage suisse (1 tasse)</span></label>
+        <label class="item" data-id="62824282547f" data-category="Produits laitiers"><input type="checkbox" data-static="true"><span class="item-label">lait (1/2 tasse)</span></label>
+        <label class="item" data-id="e4d234873c2a" data-category="Produits laitiers"><input type="checkbox" data-static="true"><span class="item-label">creme (1 tasse)</span></label>
+        <label class="item" data-id="7745e18f7bf1" data-category="Produits laitiers"><input type="checkbox" data-static="true"><span class="item-label">parmesan (1/2 tasse)</span></label>
+        <label class="item" data-id="b72f68bb1cc2" data-category="Produits laitiers"><input type="checkbox" data-static="true"><span class="item-label">lait en poches (1 sac)<span class="tag">recurrent</span></span></label>
+        <label class="item" data-id="0a57d4685237" data-category="Produits laitiers"><input type="checkbox" data-static="true"><span class="item-label">yogourt (au besoin)<span class="tag">recurrent</span></span></label>
+        <label class="item" data-id="fe796c7f0aa1" data-category="Produits laitiers"><input type="checkbox" data-static="true"><span class="item-label">bloc de fromage (au besoin)<span class="tag">recurrent</span></span></label>
+      </div>
+    </section>
+    <section>
+      <h2>Boulangerie</h2>
+      <div class="list">
+        <label class="item" data-id="7b2530486615" data-category="Boulangerie"><input type="checkbox" data-static="true"><span class="item-label">tortillas (10)</span></label>
+      </div>
+    </section>
+    <section>
+      <h2>Epicerie seche</h2>
+      <div class="list">
+        <label class="item" data-id="6bd802ceb83b" data-category="Epicerie seche"><input type="checkbox" data-static="true"><span class="item-label">riz basmati (2 tasses)</span></label>
+        <label class="item" data-id="dad3b512db32" data-category="Epicerie seche"><input type="checkbox" data-static="true"><span class="item-label">epices a tacos (1 sachet)</span></label>
+        <label class="item" data-id="6814280da581" data-category="Epicerie seche"><input type="checkbox" data-static="true"><span class="item-label">haricots noirs (1 conserve)</span></label>
+        <label class="item" data-id="f59e12da9dbd" data-category="Epicerie seche"><input type="checkbox" data-static="true"><span class="item-label">pates courtes (450 g)</span></label>
+        <label class="item" data-id="69637a84bb3c" data-category="Epicerie seche"><input type="checkbox" data-static="true"><span class="item-label">biscuits (au besoin)<span class="tag">recurrent</span></span></label>
+      </div>
+    </section>
+    <section>
+      <h2>Surgeles</h2>
+      <div class="list">
+        <label class="item" data-id="ba4096d43e58" data-category="Surgeles"><input type="checkbox" data-static="true"><span class="item-label">petits pois (1 tasse)</span></label>
+      </div>
+    </section>
+    <section>
+      <h2>Condiments</h2>
+      <div class="list">
+        <label class="item" data-id="108435475cd0" data-category="Condiments"><input type="checkbox" data-static="true"><span class="item-label">salsa (1 pot)</span></label>
+        <label class="item" data-id="1f8094a3a8f3" data-category="Condiments"><input type="checkbox" data-static="true"><span class="item-label">sauce BBQ (1/2 tasse)</span></label>
+        <label class="item" data-id="b802e41f9681" data-category="Condiments"><input type="checkbox" data-static="true"><span class="item-label">vinaigrette (1/4 tasse)</span></label>
+      </div>
+    </section>
+    <section>
+      <h2>Autres</h2>
+      <div class="list">
+        <label class="item" data-id="a2c930a3b7d3" data-category="Autres"><input type="checkbox" data-static="true"><span class="item-label">dejeuner (au besoin)<span class="tag">recurrent</span></span></label>
+        <label class="item" data-id="0679d1c2177b" data-category="Autres"><input type="checkbox" data-static="true"><span class="item-label">jus pour lunchs (au besoin)<span class="tag">recurrent</span></span></label>
+        <label class="item" data-id="e35f25aff46b" data-category="Autres"><input type="checkbox" data-static="true"><span class="item-label">jus d&#x27;orange (1)<span class="tag">recurrent</span></span></label>
+        <label class="item" data-id="84e52cb9d460" data-category="Autres"><input type="checkbox" data-static="true"><span class="item-label">Coke (1 caisse)<span class="tag">recurrent</span></span></label>
+        <label class="item" data-id="813546c05949" data-category="Autres"><input type="checkbox" data-static="true"><span class="item-label">7up (1 caisse)<span class="tag">recurrent</span></span></label>
+        <label class="item" data-id="8f2fdbaa30ce" data-category="Autres"><input type="checkbox" data-static="true"><span class="item-label">chips (au besoin)<span class="tag">recurrent</span></span></label>
+      </div>
+    </section>
+    </div>
+    <section class="done-section">
+      <h2>Achete</h2>
+      <div class="list" id="doneList">
+        <div class="empty">Rien de coche pour le moment.</div>
+      </div>
+    </section>
+  </main>
+  <script type="application/json" id="groceryData">{"week": "2026-W26", "sourcePlan": "2026-W26.md", "fingerprint": "b31f2d364c73", "items": [{"id": "58293688ca98", "category": "Fruits et legumes", "label": "concombres (2)", "recurrent": false}, {"id": "15e014ae10c0", "category": "Fruits et legumes", "label": "tomates cerises (1 chopine)", "recurrent": false}, {"id": "126128c8cdf2", "category": "Fruits et legumes", "label": "citron (1)", "recurrent": false}, {"id": "9960f2c0af4d", "category": "Fruits et legumes", "label": "laitue (1)", "recurrent": false}, {"id": "fea39350d018", "category": "Fruits et legumes", "label": "pommes de terre (800 g)", "recurrent": false}, {"id": "7c362cd3c9e8", "category": "Fruits et legumes", "label": "melange salade (1 sac)", "recurrent": false}, {"id": "47065037308c", "category": "Fruits et legumes", "label": "poivrons (2)", "recurrent": false}, {"id": "108a02ef3556", "category": "Fruits et legumes", "label": "fruits (au besoin) [recurrent]", "recurrent": true}, {"id": "f0b05b6584ba", "category": "Viandes et poissons", "label": "poitrines de poulet (700 g)", "recurrent": false}, {"id": "41e3aafb97c4", "category": "Viandes et poissons", "label": "hauts de cuisse de poulet (8)", "recurrent": false}, {"id": "cc0d820ae988", "category": "Viandes et poissons", "label": "jambon (250 g)", "recurrent": false}, {"id": "d619d478414a", "category": "Produits laitiers", "label": "yogourt grec (1 tasse)", "recurrent": false}, {"id": "59050e4e2001", "category": "Produits laitiers", "label": "fromage rape (2 tasses)", "recurrent": false}, {"id": "ef9378f33557", "category": "Produits laitiers", "label": "oeufs (10)", "recurrent": false}, {"id": "2503e1250b67", "category": "Produits laitiers", "label": "fromage suisse (1 tasse)", "recurrent": false}, {"id": "62824282547f", "category": "Produits laitiers", "label": "lait (1/2 tasse)", "recurrent": false}, {"id": "e4d234873c2a", "category": "Produits laitiers", "label": "creme (1 tasse)", "recurrent": false}, {"id": "7745e18f7bf1", "category": "Produits laitiers", "label": "parmesan (1/2 tasse)", "recurrent": false}, {"id": "b72f68bb1cc2", "category": "Produits laitiers", "label": "lait en poches (1 sac) [recurrent]", "recurrent": true}, {"id": "0a57d4685237", "category": "Produits laitiers", "label": "yogourt (au besoin) [recurrent]", "recurrent": true}, {"id": "fe796c7f0aa1", "category": "Produits laitiers", "label": "bloc de fromage (au besoin) [recurrent]", "recurrent": true}, {"id": "7b2530486615", "category": "Boulangerie", "label": "tortillas (10)", "recurrent": false}, {"id": "6bd802ceb83b", "category": "Epicerie seche", "label": "riz basmati (2 tasses)", "recurrent": false}, {"id": "dad3b512db32", "category": "Epicerie seche", "label": "epices a tacos (1 sachet)", "recurrent": false}, {"id": "6814280da581", "category": "Epicerie seche", "label": "haricots noirs (1 conserve)", "recurrent": false}, {"id": "f59e12da9dbd", "category": "Epicerie seche", "label": "pates courtes (450 g)", "recurrent": false}, {"id": "69637a84bb3c", "category": "Epicerie seche", "label": "biscuits (au besoin) [recurrent]", "recurrent": true}, {"id": "ba4096d43e58", "category": "Surgeles", "label": "petits pois (1 tasse)", "recurrent": false}, {"id": "108435475cd0", "category": "Condiments", "label": "salsa (1 pot)", "recurrent": false}, {"id": "1f8094a3a8f3", "category": "Condiments", "label": "sauce BBQ (1/2 tasse)", "recurrent": false}, {"id": "b802e41f9681", "category": "Condiments", "label": "vinaigrette (1/4 tasse)", "recurrent": false}, {"id": "a2c930a3b7d3", "category": "Autres", "label": "dejeuner (au besoin) [recurrent]", "recurrent": true}, {"id": "0679d1c2177b", "category": "Autres", "label": "jus pour lunchs (au besoin) [recurrent]", "recurrent": true}, {"id": "e35f25aff46b", "category": "Autres", "label": "jus d'orange (1) [recurrent]", "recurrent": true}, {"id": "84e52cb9d460", "category": "Autres", "label": "Coke (1 caisse) [recurrent]", "recurrent": true}, {"id": "813546c05949", "category": "Autres", "label": "7up (1 caisse) [recurrent]", "recurrent": true}, {"id": "8f2fdbaa30ce", "category": "Autres", "label": "chips (au besoin) [recurrent]", "recurrent": true}], "skipped": ["bacon", "boeuf hache"], "categories": ["Fruits et legumes", "Viandes et poissons", "Produits laitiers", "Boulangerie", "Epicerie seche", "Surgeles", "Condiments", "Autres"]}</script>
+  <script>
+    const data = JSON.parse(document.getElementById("groceryData").textContent);
+    const storageKey = `grocery-html:${data.week}:${data.fingerprint}`;
+    const checked = new Set(JSON.parse(localStorage.getItem(storageKey) || "[]"));
+    const shopping = document.getElementById("shopping");
+    const doneList = document.getElementById("doneList");
+    const remainingCount = document.getElementById("remainingCount");
+
+    function save() {
+      localStorage.setItem(storageKey, JSON.stringify([...checked]));
+    }
+
+    function itemElement(item) {
+      const label = document.createElement("label");
+      label.className = "item";
+      label.dataset.id = item.id;
+      label.dataset.category = item.category;
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = checked.has(item.id);
+      checkbox.addEventListener("change", () => {
+        if (checkbox.checked) {
+          checked.add(item.id);
+        } else {
+          checked.delete(item.id);
+        }
+        save();
+        render();
+      });
+
+      const text = document.createElement("span");
+      text.className = "item-label";
+      text.textContent = item.label.replace(" [recurrent]", "");
+      if (item.recurrent) {
+        const tag = document.createElement("span");
+        tag.className = "tag";
+        tag.textContent = "recurrent";
+        text.appendChild(tag);
+      }
+
+      label.appendChild(checkbox);
+      label.appendChild(text);
+      return label;
+    }
+
+    function renderInventory() {
+      const inventory = document.getElementById("inventory");
+      inventory.replaceChildren();
+      if (!data.skipped.length) return;
+      const section = document.createElement("section");
+      const h2 = document.createElement("h2");
+      h2.textContent = "Deja dans l'inventaire";
+      section.appendChild(h2);
+      data.skipped.forEach((item) => {
+        const div = document.createElement("div");
+        div.className = "inventory-item";
+        div.textContent = item;
+        section.appendChild(div);
+      });
+      inventory.appendChild(section);
+    }
+
+    function render() {
+      shopping.replaceChildren();
+      doneList.replaceChildren();
+      let remaining = 0;
+
+      data.categories.forEach((category) => {
+        const categoryItems = data.items.filter((item) => item.category === category);
+        const activeItems = categoryItems.filter((item) => !checked.has(item.id));
+        if (!categoryItems.length) return;
+
+        const section = document.createElement("section");
+        const h2 = document.createElement("h2");
+        h2.textContent = category;
+        section.appendChild(h2);
+
+        const list = document.createElement("div");
+        list.className = "list";
+        if (activeItems.length) {
+          activeItems.forEach((item) => list.appendChild(itemElement(item)));
+        } else {
+          const empty = document.createElement("div");
+          empty.className = "empty";
+          empty.textContent = "Tout est coche dans cette categorie.";
+          list.appendChild(empty);
+        }
+        section.appendChild(list);
+        shopping.appendChild(section);
+        remaining += activeItems.length;
+      });
+
+      data.items
+        .filter((item) => checked.has(item.id))
+        .forEach((item) => doneList.appendChild(itemElement(item)));
+
+      if (!doneList.children.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = "Rien de coche pour le moment.";
+        doneList.appendChild(empty);
+      }
+
+      remainingCount.textContent = `${remaining} restant${remaining > 1 ? "s" : ""}`;
+    }
+
+    renderInventory();
+    render();
+  </script>
+</body>
+</html>
