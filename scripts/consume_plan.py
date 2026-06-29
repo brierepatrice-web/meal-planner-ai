@@ -5,6 +5,7 @@ import sys
 from meal_os import (
     DATA,
     canonical_ingredient_name,
+    ingredient_units,
     integer_quantity,
     item_name,
     item_quantity,
@@ -13,6 +14,7 @@ from meal_os import (
     parse_plan,
     read_recipes,
     recipe_restriction_violations,
+    side_recipes_for_dinner,
 )
 
 
@@ -58,6 +60,16 @@ def deduct_inventory(plan_path):
     recipes = {recipe["title"]: recipe for recipe in read_recipes("main")}
     used_names = set()
     used_quantities = {}
+
+    def add_used_ingredients(recipe):
+        for ingredient in recipe["ingredients"]:
+            name = canonical_ingredient_name(ingredient["name"])
+            quantity = integer_quantity(str(ingredient["quantity"]))
+            if quantity is None:
+                used_names.add(name)
+            else:
+                used_quantities[name] = used_quantities.get(name, 0) + ingredient_units(ingredient["name"], quantity)
+
     for dinner in dinners:
         recipe = recipes.get(dinner["title"])
         if not recipe:
@@ -65,13 +77,9 @@ def deduct_inventory(plan_path):
         violations = recipe_restriction_violations(recipe)
         if violations:
             raise ValueError(f"Plan contains forbidden recipe '{dinner['title']}': {', '.join(violations)}")
-        for ingredient in recipe["ingredients"]:
-            name = canonical_ingredient_name(ingredient["name"])
-            quantity = integer_quantity(str(ingredient["quantity"]))
-            if quantity is None:
-                used_names.add(name)
-            else:
-                used_quantities[name] = used_quantities.get(name, 0) + quantity
+        add_used_ingredients(recipe)
+        for side_recipe in side_recipes_for_dinner(dinner, plan_path):
+            add_used_ingredients(side_recipe)
 
     deducted = []
     for path in sorted((DATA / "inventory").glob("*.md")):
@@ -90,13 +98,17 @@ def deduct_inventory(plan_path):
             name = item_name(raw_item)
             canonical_name = canonical_ingredient_name(name)
             quantity = integer_quantity(item_quantity(raw_item))
+            item_unit_size = ingredient_units(name, 1)
             remaining_needed = used_quantities.get(canonical_name, 0)
             if quantity is not None and remaining_needed > 0:
-                deducted_quantity = min(quantity, remaining_needed)
-                used_quantities[canonical_name] = remaining_needed - deducted_quantity
+                inventory_units = ingredient_units(name, quantity)
+                deducted_units = min(inventory_units, remaining_needed)
+                used_quantities[canonical_name] = remaining_needed - deducted_units
+                deducted_quantity = (deducted_units + item_unit_size - 1) // item_unit_size
                 deducted.append(f"{name} x{deducted_quantity} ({path.stem})")
                 changed = True
-                remaining_quantity = quantity - deducted_quantity
+                remaining_units = inventory_units - deducted_units
+                remaining_quantity = remaining_units // item_unit_size
                 if remaining_quantity > 0:
                     item_label = raw_item.split("|", 1)[0].strip()
                     updated.append(f"- {item_label} | {remaining_quantity}")

@@ -13,7 +13,7 @@ leftover_lunch_style: restants rechauffes
 kids_leftover_ok: false
 adult_leftover_ok: true
 freezes_well: true
-suggested_side_dishes: [Riz ou pain de mais]
+suggested_side_dishes: [Riz]
 contains_vegetable: true
 contains_starch: false
 mode_tags: [leftover_friendly, batch_cooking, comfort]

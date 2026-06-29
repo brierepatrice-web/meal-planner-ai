@@ -13,6 +13,7 @@ Objectifs:
 - Pour les recettes principales, renseigner la capacite de restants: `leftover_lunch_portions`, `leftover_lunch_style`, `kids_leftover_ok` et `adult_leftover_ok`.
 - Pour les recettes de lunch, renseigner `lunch_temperature`.
 - Proposer des accompagnements lorsque la recette principale en a besoin.
+- Les valeurs de `suggested_side_dishes` doivent correspondre a des titres de recettes `category: side` existantes.
 - Classer precisement les proteines: `fish` pour poisson, `mussels` pour moules, `crustacean` pour crustaces.
 - Ne jamais activer une recette contenant des crustaces.
 

@@ -12,12 +12,15 @@ from meal_os import (
     MAIN_RECIPE_FIELDS,
     MODE_RULE_FIELDS,
     REQUIRED_RECIPE_FIELDS,
+    normalize_text,
     parse_frontmatter,
     parse_ingredients,
+    parse_plan,
     read_mode_definitions,
     read_modes,
     recipe_paths,
     recipe_restriction_violations,
+    side_titles as parse_side_titles,
 )
 
 ALLOWED_MODES = {"ecole", "pas_ecole"}
@@ -44,6 +47,12 @@ def validate_recipes(errors: list[str]) -> None:
     paths = recipe_paths()
     if not paths:
         return
+    side_recipe_titles = set()
+    for path in paths:
+        meta, _ = parse_frontmatter(path)
+        if meta.get("category") == "side" and meta.get("title"):
+            side_recipe_titles.add(normalize_text(str(meta["title"])))
+
     for path in paths:
         meta, body = parse_frontmatter(path)
         if not meta:
@@ -90,6 +99,9 @@ def validate_recipes(errors: list[str]) -> None:
                     errors.append(f"{path}: leftover_friendly true requires kids or adults to be leftover-compatible")
             if meta.get("kids_leftover_ok") and style not in KIDS_LEFTOVER_STYLES:
                 errors.append(f"{path}: kids leftover style must be cold or portable")
+            for side_title in meta.get("suggested_side_dishes", []) or []:
+                if normalize_text(str(side_title)) not in side_recipe_titles:
+                    errors.append(f"{path}: unknown suggested side dish '{side_title}'")
         if meta.get("category") == "lunch":
             for field in LUNCH_RECIPE_FIELDS:
                 if field not in meta or meta[field] not in LUNCH_TEMPERATURES:
@@ -127,11 +139,32 @@ def validate_modes(errors: list[str]) -> None:
             errors.append(f"Mode '{mode}' field 'requires_child_lunches' must be true or false")
 
 
+def validate_plans(errors: list[str]) -> None:
+    side_recipe_titles = set()
+    for path in recipe_paths():
+        meta, _ = parse_frontmatter(path)
+        if meta.get("category") == "side" and meta.get("title"):
+            side_recipe_titles.add(normalize_text(str(meta["title"])))
+
+    for folder in (DATA / "drafts", DATA / "plans"):
+        if not folder.exists():
+            continue
+        for path in sorted(folder.glob("*.md")):
+            _, dinners, _ = parse_plan(path)
+            for dinner in dinners:
+                for side_title in parse_side_titles(dinner.get("side")):
+                    if normalize_text(side_title) not in side_recipe_titles:
+                        errors.append(
+                            f"{path}: unknown side dish '{side_title}' in {dinner.get('day')} ({dinner.get('title')})"
+                        )
+
+
 def main() -> int:
     errors: list[str] = []
     validate_required_files(errors)
     validate_modes(errors)
     validate_recipes(errors)
+    validate_plans(errors)
     if errors:
         print("Validation failed:")
         for error in errors:

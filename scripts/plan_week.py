@@ -205,7 +205,7 @@ GENERATED_MAIN_RECIPES = [
         "kids_leftover_ok": False,
         "adult_leftover_ok": True,
         "freezes_well": True,
-        "suggested_side_dishes": ["Riz ou pain de mais"],
+        "suggested_side_dishes": ["Riz"],
         "contains_vegetable": True,
         "contains_starch": False,
         "mode_tags": ["leftover_friendly", "batch_cooking", "comfort"],
@@ -499,7 +499,7 @@ def side_dishes_for(recipe: dict) -> str:
     if not recipe.get("contains_vegetable", False) and not has_side_vegetable:
         sides.append("Legumes de saison")
     if not recipe.get("contains_starch", False) and not has_side_starch:
-        sides.append("Riz, pommes de terre ou pain")
+        sides.append("Riz")
     return ", ".join(sides) if sides else "aucun"
 
 

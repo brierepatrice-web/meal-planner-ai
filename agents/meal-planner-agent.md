@@ -30,3 +30,4 @@ Regles:
 - Ne pas utiliser le meme type de lunch plus de deux fois par semaine pour les enfants ou pour les adultes.
 - Utiliser les restants seulement lorsque la recette declare des portions leftover, un style compatible et le public admissible.
 - Ajouter un accompagnement lorsqu'un souper n'a pas deja un legume ou un feculent.
+- Les accompagnements doivent correspondre a des titres de recettes `category: side` dans `data/recipes/sides/`; ne pas utiliser de libelle ambigu comme `Riz, pommes de terre ou pain`.

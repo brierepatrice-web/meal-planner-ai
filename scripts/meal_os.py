@@ -50,6 +50,9 @@ GROCERY_CATEGORIES = [
     "Autres",
 ]
 PEPPER_COLORS = {"rouge", "jaune", "orange", "vert"}
+MINI_CUCUMBER_TERMS = {"mini", "minis"}
+CUCUMBER_TERMS = {"concombre", "concombres"}
+CUCUMBER_UNITS_PER_REGULAR = 6
 ACTIVE_RECIPE_DIRS = ["mains", "sides", "lunches"]
 MODE_RULE_FIELDS = [
     "requires_lunches",
@@ -178,11 +181,34 @@ def integer_quantity(value: str) -> int | None:
 
 def canonical_ingredient_name(value: str) -> str:
     clean = normalize_text(value).strip()
-    parts = clean.split()
+    parts = clean.replace("-", " ").split()
     if parts and parts[0] in {"poivron", "poivrons"}:
         if len(parts) == 1 or parts[1] in PEPPER_COLORS:
             return "poivron"
+    if parts and parts[0] in CUCUMBER_TERMS:
+        return "concombre"
+    if len(parts) >= 2 and parts[0] in MINI_CUCUMBER_TERMS and parts[1] in CUCUMBER_TERMS:
+        return "concombre"
     return clean
+
+
+def ingredient_unit_size(value: str) -> int:
+    clean = normalize_text(value).strip()
+    parts = clean.replace("-", " ").split()
+    if len(parts) >= 2 and parts[0] in MINI_CUCUMBER_TERMS and parts[1] in CUCUMBER_TERMS:
+        return 1
+    if parts and parts[0] in CUCUMBER_TERMS:
+        return CUCUMBER_UNITS_PER_REGULAR
+    return 1
+
+
+def ingredient_units(value: str, quantity: int) -> int:
+    return quantity * ingredient_unit_size(value)
+
+
+def purchase_quantity_for_units(value: str, units: int) -> int:
+    unit_size = ingredient_unit_size(value)
+    return (units + unit_size - 1) // unit_size
 
 
 def read_inventory() -> dict[str, list[str]]:
@@ -209,8 +235,9 @@ def inventory_quantities() -> dict[str, int]:
             quantity = integer_quantity(item_quantity(item))
             if quantity is None:
                 continue
-            name = canonical_ingredient_name(item_name(item))
-            quantities[name] = quantities.get(name, 0) + quantity
+            raw_name = item_name(item)
+            name = canonical_ingredient_name(raw_name)
+            quantities[name] = quantities.get(name, 0) + ingredient_units(raw_name, quantity)
     return quantities
 
 
@@ -397,6 +424,45 @@ def read_pending_recipes(plan_path: Path, category: str | None = None) -> list[d
         recipe["ingredients"] = parse_ingredients(body)
         recipes.append(recipe)
     return recipes
+
+
+def side_titles(value: str | None) -> list[str]:
+    if not value:
+        return []
+    normalized = value.strip()
+    if not normalized or normalize_text(normalized) == "aucun":
+        return []
+    titles = []
+    for part in normalized.split(","):
+        title = part.strip()
+        if title and normalize_text(title) != "aucun":
+            titles.append(title)
+    return titles
+
+
+def side_recipe_lookup(plan_path: Path | None = None) -> dict[str, dict]:
+    recipes = read_recipes("side")
+    if plan_path:
+        recipes.extend(read_pending_recipes(plan_path, "side"))
+    return {normalize_text(recipe["title"]): recipe for recipe in recipes}
+
+
+def side_recipes_for_dinner(dinner: dict, plan_path: Path | None = None) -> list[dict]:
+    lookup = side_recipe_lookup(plan_path)
+    resolved = []
+    missing = []
+    for title in side_titles(dinner.get("side")):
+        recipe = lookup.get(normalize_text(title))
+        if recipe:
+            resolved.append(recipe)
+        else:
+            missing.append(title)
+    if missing:
+        raise ValueError(
+            f"Unknown side dish(es) for {dinner.get('day', 'meal')} '{dinner.get('title', '')}': "
+            + ", ".join(missing)
+        )
+    return resolved
 
 
 def crustacean_term_in_text(value: str) -> str | None:

@@ -6,7 +6,15 @@ import html
 import re
 from pathlib import Path
 
-from meal_os import DATA, latest_file, parse_frontmatter, parse_plan, read_pending_recipes, read_recipes
+from meal_os import (
+    DATA,
+    latest_file,
+    parse_frontmatter,
+    parse_plan,
+    read_pending_recipes,
+    read_recipes,
+    side_recipes_for_dinner,
+)
 
 
 OUT_DIR = DATA / "meal_plan_html"
@@ -61,7 +69,7 @@ def render_ingredient(ingredient: dict) -> str:
     )
 
 
-def render_recipe(recipe: dict | None, dinner: dict) -> str:
+def render_recipe(recipe: dict | None, dinner: dict, plan_path: Path) -> str:
     title = dinner["title"]
     anchor = recipe_id(title)
     side = dinner.get("side") or "aucun"
@@ -82,6 +90,28 @@ def render_recipe(recipe: dict | None, dinner: dict) -> str:
         """
 
     ingredients = "\n".join(render_ingredient(item) for item in recipe.get("ingredients", []))
+    side_recipes = side_recipes_for_dinner(dinner, plan_path)
+    side_ingredients = ""
+    if side_recipes:
+        rendered_sides = []
+        for side_recipe in side_recipes:
+            items = "\n".join(render_ingredient(item) for item in side_recipe.get("ingredients", []))
+            rendered_sides.append(
+                f"""
+                <div class="side-block">
+                  <h4>{esc(side_recipe["title"])}</h4>
+                  <ul class="ingredients side-ingredients">
+                    {items}
+                  </ul>
+                </div>
+                """
+            )
+        side_ingredients = f"""
+          <div class="side-section">
+            <h3>Accompagnements</h3>
+            {"".join(rendered_sides)}
+          </div>
+        """
     steps = method_steps(recipe)
     method = "\n".join(f"<li>{esc(step)}</li>" for step in steps)
     if not method:
@@ -119,6 +149,7 @@ def render_recipe(recipe: dict | None, dinner: dict) -> str:
           <ul class="ingredients">
             {ingredients}
           </ul>
+          {side_ingredients}
         </div>
         <div>
           <h3>Methode</h3>
@@ -154,7 +185,7 @@ def render_html(plan_path: Path) -> str:
     meta, dinners, _ = parse_plan(plan_path)
     week = meta.get("week") or plan_path.stem
     recipes = recipe_lookup(plan_path)
-    recipe_sections = "\n".join(render_recipe(recipes.get(dinner["title"]), dinner) for dinner in dinners)
+    recipe_sections = "\n".join(render_recipe(recipes.get(dinner["title"]), dinner, plan_path) for dinner in dinners)
 
     return f"""<!doctype html>
 <html lang="fr">
@@ -398,7 +429,10 @@ def main() -> None:
     if not plan_path:
         raise SystemExit("Aucun plan committed trouve dans data/plans/.")
 
-    out_path = write_meal_plan_html(plan_path, args.out)
+    try:
+        out_path = write_meal_plan_html(plan_path, args.out)
+    except ValueError as error:
+        raise SystemExit(str(error))
     print(f"Meal plan HTML written: {out_path}")
 
 

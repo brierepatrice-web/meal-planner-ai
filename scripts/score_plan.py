@@ -13,6 +13,7 @@ from meal_os import (
     read_pending_recipes,
     read_recipes,
     season_for_date,
+    side_recipes_for_dinner,
 )
 
 
@@ -30,11 +31,9 @@ def score_plan(path):
     ingredient_usage = {}
     season = meta.get("season") or season_for_date()
 
-    for dinner in dinners:
-        recipe = recipes.get(dinner["title"])
-        if not recipe:
-            continue
-        if season in recipe.get("preferred_seasons", []):
+    def score_ingredients(recipe: dict, include_season: bool = False) -> None:
+        nonlocal ingredient_count, inventory_hits
+        if include_season and season in recipe.get("preferred_seasons", []):
             ingredient_usage.setdefault("_season_hits", 0)
             ingredient_usage["_season_hits"] += 1
         for ingredient in recipe["ingredients"]:
@@ -43,6 +42,14 @@ def score_plan(path):
             ingredient_usage[name] = ingredient_usage.get(name, 0) + 1
             if canonical_ingredient_name(name) in owned:
                 inventory_hits += 1
+
+    for dinner in dinners:
+        recipe = recipes.get(dinner["title"])
+        if not recipe:
+            continue
+        score_ingredients(recipe, include_season=True)
+        for side_recipe in side_recipes_for_dinner(dinner, path):
+            score_ingredients(side_recipe)
 
     repeated_ingredients = sum(1 for name, count in ingredient_usage.items() if not name.startswith("_") and count > 1)
     season_hits = ingredient_usage.get("_season_hits", 0)
@@ -76,7 +83,11 @@ def main() -> int:
     if not plan_path:
         print("No plan found. Run scripts/plan_week.py first.")
         return 1
-    scores = score_plan(plan_path)
+    try:
+        scores = score_plan(plan_path)
+    except ValueError as error:
+        print(error)
+        return 1
     for key, value in scores.items():
         print(f"{key}: {value}")
     return 0

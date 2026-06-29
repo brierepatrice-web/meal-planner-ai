@@ -67,6 +67,8 @@ Les ingredients sont lus dans la section `## Ingredients`, au format:
 - nom de l'ingredient | categorie | quantite
 ```
 
+Les accompagnements vivent dans `data/recipes/sides/` avec `category: side`. Le champ `suggested_side_dishes` des recettes principales et la colonne `Side` des plans doivent utiliser les titres exacts de ces recettes. Les ingredients des accompagnements sont inclus dans la liste d'epicerie, le score du plan, le HTML des repas et la deduction d'inventaire.
+
 ## Restrictions Alimentaires
 
 Le profil maison definit les restrictions alimentaires dans `data/profile/household.md`.
@@ -123,7 +125,7 @@ Chaque plan contient toujours les diners adultes. En mode `ecole`, les lunchs en
 
 Un meme type de lunch ne doit pas apparaitre plus de deux fois par semaine dans la colonne enfants ni plus de deux fois dans la colonne adultes. Si les restants produisent trop de wraps ou de lunchs rechauffes, le planificateur alterne avec des options froides autonomes.
 
-Les soupers qui n'ont pas deja un legume ou un feculent selon `contains_vegetable` et `contains_starch` recoivent un accompagnement depuis `suggested_side_dishes` ou un fallback simple.
+Les soupers qui n'ont pas deja un legume ou un feculent selon `contains_vegetable` et `contains_starch` recoivent un accompagnement depuis `suggested_side_dishes` ou un fallback concret. Les fallbacks standards sont `Legumes de saison` pour les legumes et `Riz` pour les feculents.
 
 ## Saison
 

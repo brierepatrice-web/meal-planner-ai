@@ -4,7 +4,7 @@ Tu es responsable des listes d'epicerie.
 
 Objectifs:
 
-- Calculer les ingredients requis par les recettes choisies.
+- Calculer les ingredients requis par les recettes choisies, incluant les recettes d'accompagnement referencees dans la colonne `Side`.
 - Exclure de la liste d'epicerie les ingredients deja presents dans l'inventaire lorsque possible.
 - Ajouter les achats recurrents.
 - Categoriser la liste finale.

@@ -7,17 +7,56 @@ from meal_os import (
     DATA,
     GROCERY_CATEGORIES,
     canonical_ingredient_name,
+    ingredient_units,
     integer_quantity,
     inventory_names,
     inventory_quantities,
     latest_file,
     parser_with_plan_arg,
     parse_plan,
+    purchase_quantity_for_units,
     read_pending_recipes,
     read_recipes,
     read_recurring_groceries,
     recipe_restriction_violations,
+    side_recipes_for_dinner,
 )
+
+RECIPE_GROCERY_EXCLUDED_INGREDIENTS = {"lait"}
+
+
+def add_ingredient_to_categories(
+    ingredient: dict,
+    categories: dict[str, list[str]],
+    skipped: list[str],
+    owned: set[str],
+    available_quantities: dict[str, int],
+    quantified_inventory: set[str],
+) -> None:
+    name = ingredient["name"].lower()
+    canonical_name = canonical_ingredient_name(name)
+    if canonical_name in RECIPE_GROCERY_EXCLUDED_INGREDIENTS:
+        return
+    needed_quantity = integer_quantity(str(ingredient["quantity"]))
+    available_quantity = available_quantities.get(canonical_name, 0)
+    if needed_quantity is not None and available_quantity > 0:
+        needed_units = ingredient_units(name, needed_quantity)
+        used_units = min(needed_units, available_quantity)
+        available_quantities[canonical_name] = available_quantity - used_units
+        if used_units == needed_units:
+            skipped.append(ingredient["name"])
+            return
+        ingredient = dict(ingredient)
+        ingredient["quantity"] = str(purchase_quantity_for_units(name, needed_units - used_units))
+    elif canonical_name in owned and (needed_quantity is None or canonical_name not in quantified_inventory):
+        skipped.append(ingredient["name"])
+        return
+    category = ingredient["category"]
+    if category not in categories:
+        category = "Autres"
+    rendered = f"- {ingredient['name']} ({ingredient['quantity']})"
+    if rendered not in categories[category]:
+        categories[category].append(rendered)
 
 
 def grocery_items_for_plan(plan_path: Path) -> tuple[dict[str, list[str]], list[str]]:
@@ -38,27 +77,24 @@ def grocery_items_for_plan(plan_path: Path) -> tuple[dict[str, list[str]], list[
         if violations:
             raise ValueError(f"Plan contains forbidden recipe '{dinner['title']}': {', '.join(violations)}")
         for ingredient in recipe["ingredients"]:
-            name = ingredient["name"].lower()
-            canonical_name = canonical_ingredient_name(name)
-            needed_quantity = integer_quantity(str(ingredient["quantity"]))
-            available_quantity = available_quantities.get(canonical_name, 0)
-            if needed_quantity is not None and available_quantity > 0:
-                used_quantity = min(needed_quantity, available_quantity)
-                available_quantities[canonical_name] = available_quantity - used_quantity
-                if used_quantity == needed_quantity:
-                    skipped.append(ingredient["name"])
-                    continue
-                ingredient = dict(ingredient)
-                ingredient["quantity"] = str(needed_quantity - used_quantity)
-            elif canonical_name in owned and (needed_quantity is None or canonical_name not in quantified_inventory):
-                skipped.append(ingredient["name"])
-                continue
-            category = ingredient["category"]
-            if category not in categories:
-                category = "Autres"
-            rendered = f"- {ingredient['name']} ({ingredient['quantity']})"
-            if rendered not in categories[category]:
-                categories[category].append(rendered)
+            add_ingredient_to_categories(
+                ingredient,
+                categories,
+                skipped,
+                owned,
+                available_quantities,
+                quantified_inventory,
+            )
+        for side_recipe in side_recipes_for_dinner(dinner, plan_path):
+            for ingredient in side_recipe["ingredients"]:
+                add_ingredient_to_categories(
+                    ingredient,
+                    categories,
+                    skipped,
+                    owned,
+                    available_quantities,
+                    quantified_inventory,
+                )
 
     for item in read_recurring_groceries():
         category = item["category"] if item["category"] in categories else "Autres"
@@ -101,7 +137,11 @@ def main() -> int:
     if not plan_path:
         print("No plan found. Run scripts/plan_week.py first.")
         return 1
-    out = write_grocery_list(plan_path)
+    try:
+        out = write_grocery_list(plan_path)
+    except ValueError as error:
+        print(error)
+        return 1
     print(f"Grocery list written: {out}")
     return 0
 

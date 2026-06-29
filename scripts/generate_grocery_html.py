@@ -429,7 +429,10 @@ def main() -> int:
     if not plan_path.exists():
         print(f"Plan not found: {plan_path}")
         return 1
-    out = write_grocery_html(plan_path, args.out)
+    try:
+        out = write_grocery_html(plan_path, args.out)
+    except ValueError as error:
+        raise SystemExit(str(error))
     print(f"Grocery HTML written: {out}")
     return 0
 
