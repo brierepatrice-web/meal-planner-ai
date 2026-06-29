@@ -49,6 +49,7 @@ GROCERY_CATEGORIES = [
     "Condiments",
     "Autres",
 ]
+PEPPER_COLORS = {"rouge", "jaune", "orange", "vert"}
 ACTIVE_RECIPE_DIRS = ["mains", "sides", "lunches"]
 MODE_RULE_FIELDS = [
     "requires_lunches",
@@ -163,6 +164,27 @@ def item_name(value: str) -> str:
     return value.split("|", 1)[0].strip().lower()
 
 
+def item_quantity(value: str) -> str:
+    parts = [part.strip() for part in value.split("|")]
+    return parts[1] if len(parts) > 1 else ""
+
+
+def integer_quantity(value: str) -> int | None:
+    clean = value.strip()
+    if re.fullmatch(r"\d+", clean):
+        return int(clean)
+    return None
+
+
+def canonical_ingredient_name(value: str) -> str:
+    clean = normalize_text(value).strip()
+    parts = clean.split()
+    if parts and parts[0] in {"poivron", "poivrons"}:
+        if len(parts) == 1 or parts[1] in PEPPER_COLORS:
+            return "poivron"
+    return clean
+
+
 def read_inventory() -> dict[str, list[str]]:
     inventory = {}
     for path in sorted((DATA / "inventory").glob("*.md")):
@@ -174,8 +196,22 @@ def inventory_names() -> set[str]:
     names = set()
     for items in read_inventory().values():
         for item in items:
-            names.add(item_name(item))
+            name = item_name(item)
+            names.add(name)
+            names.add(canonical_ingredient_name(name))
     return names
+
+
+def inventory_quantities() -> dict[str, int]:
+    quantities: dict[str, int] = {}
+    for items in read_inventory().values():
+        for item in items:
+            quantity = integer_quantity(item_quantity(item))
+            if quantity is None:
+                continue
+            name = canonical_ingredient_name(item_name(item))
+            quantities[name] = quantities.get(name, 0) + quantity
+    return quantities
 
 
 def read_modes() -> list[str]:

@@ -6,7 +6,10 @@ from pathlib import Path
 from meal_os import (
     DATA,
     GROCERY_CATEGORIES,
+    canonical_ingredient_name,
+    integer_quantity,
     inventory_names,
+    inventory_quantities,
     latest_file,
     parser_with_plan_arg,
     parse_plan,
@@ -22,6 +25,8 @@ def grocery_items_for_plan(plan_path: Path) -> tuple[dict[str, list[str]], list[
     recipes = {recipe["title"]: recipe for recipe in read_recipes("main")}
     recipes.update({recipe["title"]: recipe for recipe in read_pending_recipes(plan_path, "main")})
     owned = inventory_names()
+    available_quantities = inventory_quantities()
+    quantified_inventory = set(available_quantities)
     categories = {category: [] for category in GROCERY_CATEGORIES}
     skipped = []
 
@@ -34,7 +39,18 @@ def grocery_items_for_plan(plan_path: Path) -> tuple[dict[str, list[str]], list[
             raise ValueError(f"Plan contains forbidden recipe '{dinner['title']}': {', '.join(violations)}")
         for ingredient in recipe["ingredients"]:
             name = ingredient["name"].lower()
-            if name in owned:
+            canonical_name = canonical_ingredient_name(name)
+            needed_quantity = integer_quantity(str(ingredient["quantity"]))
+            available_quantity = available_quantities.get(canonical_name, 0)
+            if needed_quantity is not None and available_quantity > 0:
+                used_quantity = min(needed_quantity, available_quantity)
+                available_quantities[canonical_name] = available_quantity - used_quantity
+                if used_quantity == needed_quantity:
+                    skipped.append(ingredient["name"])
+                    continue
+                ingredient = dict(ingredient)
+                ingredient["quantity"] = str(needed_quantity - used_quantity)
+            elif canonical_name in owned and (needed_quantity is None or canonical_name not in quantified_inventory):
                 skipped.append(ingredient["name"])
                 continue
             category = ingredient["category"]

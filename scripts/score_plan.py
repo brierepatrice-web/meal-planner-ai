@@ -5,6 +5,7 @@ import sys
 
 from meal_os import (
     DATA,
+    canonical_ingredient_name,
     inventory_names,
     latest_file,
     parser_with_plan_arg,
@@ -40,7 +41,7 @@ def score_plan(path):
             ingredient_count += 1
             name = ingredient["name"].lower()
             ingredient_usage[name] = ingredient_usage.get(name, 0) + 1
-            if name in owned:
+            if canonical_ingredient_name(name) in owned:
                 inventory_hits += 1
 
     repeated_ingredients = sum(1 for name, count in ingredient_usage.items() if not name.startswith("_") and count > 1)

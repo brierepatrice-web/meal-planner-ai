@@ -9,6 +9,7 @@ from meal_os import (
     KIDS_LEFTOVER_STYLES,
     PLAN_DAYS,
     active_mode_rules,
+    canonical_ingredient_name,
     current_week,
     excluded_recipe_paths,
     frontmatter,
@@ -275,7 +276,9 @@ GENERATED_MAIN_RECIPES = [
 
 def recipe_sort_key(recipe, season, owned_names, mode_rules):
     season_bonus = 20 if season in recipe.get("preferred_seasons", []) else 0
-    inventory_bonus = sum(1 for ingredient in recipe["ingredients"] if ingredient["name"].lower() in owned_names)
+    inventory_bonus = sum(
+        1 for ingredient in recipe["ingredients"] if canonical_ingredient_name(ingredient["name"]) in owned_names
+    )
     leftover_bonus = 5 if recipe.get("leftover_friendly") else 0
     effort_bonus = 4 if recipe.get("effort_level") == "low" else 0
     mode_tags = set(recipe.get("mode_tags", []) or [])

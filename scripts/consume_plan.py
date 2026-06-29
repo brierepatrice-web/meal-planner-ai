@@ -2,7 +2,18 @@ from __future__ import annotations
 
 import sys
 
-from meal_os import DATA, item_name, latest_file, parser_with_plan_arg, parse_plan, read_recipes, recipe_restriction_violations
+from meal_os import (
+    DATA,
+    canonical_ingredient_name,
+    integer_quantity,
+    item_name,
+    item_quantity,
+    latest_file,
+    parser_with_plan_arg,
+    parse_plan,
+    read_recipes,
+    recipe_restriction_violations,
+)
 
 
 def append_history(plan_path):
@@ -46,6 +57,7 @@ def deduct_inventory(plan_path):
     _, dinners, _ = parse_plan(plan_path)
     recipes = {recipe["title"]: recipe for recipe in read_recipes("main")}
     used_names = set()
+    used_quantities = {}
     for dinner in dinners:
         recipe = recipes.get(dinner["title"])
         if not recipe:
@@ -54,7 +66,12 @@ def deduct_inventory(plan_path):
         if violations:
             raise ValueError(f"Plan contains forbidden recipe '{dinner['title']}': {', '.join(violations)}")
         for ingredient in recipe["ingredients"]:
-            used_names.add(ingredient["name"].lower())
+            name = canonical_ingredient_name(ingredient["name"])
+            quantity = integer_quantity(str(ingredient["quantity"]))
+            if quantity is None:
+                used_names.add(name)
+            else:
+                used_quantities[name] = used_quantities.get(name, 0) + quantity
 
     deducted = []
     for path in sorted((DATA / "inventory").glob("*.md")):
@@ -64,8 +81,29 @@ def deduct_inventory(plan_path):
         updated = []
         changed = False
         for line in original:
-            if line.strip().startswith("- ") and item_name(line.strip()[2:]) in used_names:
-                deducted.append(f"{item_name(line.strip()[2:])} ({path.stem})")
+            stripped = line.strip()
+            if not stripped.startswith("- "):
+                updated.append(line)
+                continue
+
+            raw_item = stripped[2:].strip()
+            name = item_name(raw_item)
+            canonical_name = canonical_ingredient_name(name)
+            quantity = integer_quantity(item_quantity(raw_item))
+            remaining_needed = used_quantities.get(canonical_name, 0)
+            if quantity is not None and remaining_needed > 0:
+                deducted_quantity = min(quantity, remaining_needed)
+                used_quantities[canonical_name] = remaining_needed - deducted_quantity
+                deducted.append(f"{name} x{deducted_quantity} ({path.stem})")
+                changed = True
+                remaining_quantity = quantity - deducted_quantity
+                if remaining_quantity > 0:
+                    item_label = raw_item.split("|", 1)[0].strip()
+                    updated.append(f"- {item_label} | {remaining_quantity}")
+                continue
+
+            if canonical_name in used_names:
+                deducted.append(f"{name} ({path.stem})")
                 changed = True
                 continue
             updated.append(line)
