@@ -31,13 +31,17 @@ LAYOUT = {
     "commit": (6, 3),
     "planOut": (7, 2),
     "activeRecipes": (7, 3),
-    "grocery": (7, 4),
-    "groceryHtml": (8, 4),
+    "groceryValidation": (7, 4),
+    "grocery": (8, 4),
+    "groceryHtml": (9, 4),
+    "groceryReviewCommand": (9, 5),
+    "groceryReview": (10, 5),
     "mealHtml": (8, 1),
     "inventoryHtml": (8, 6),
     "consumed": (8, 2),
     "consume": (9, 2),
     "historyUpdate": (10, 1),
+    "eventLog": (10, 2),
     "inventoryUpdate": (10, 3),
 }
 
@@ -120,7 +124,7 @@ def render() -> None:
     if missing:
         raise RuntimeError(f"Missing layout entries for: {', '.join(missing)}")
 
-    image = Image.new("RGB", (3300, 1100), "#f8fafc")
+    image = Image.new("RGB", (3500, 1100), "#f8fafc")
     draw = ImageDraw.Draw(image)
     title_font = load_font(36, bold=True)
     font = load_font(20)

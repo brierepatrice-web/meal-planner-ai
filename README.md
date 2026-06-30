@@ -17,6 +17,8 @@ python scripts\plan_week.py
 python scripts\edit_draft.py --slot "Jour 3" --side "Salade verte"
 python scripts\commit_plan.py
 python scripts\generate_grocery_list.py
+python scripts\validate_grocery_list.py
+python scripts\validate_grocery_list.py --ai-review
 python scripts\generate_grocery_html.py
 python scripts\generate_grocery_html.py --plan data\plans\2026-W26.md --out site\liste-epicerie.html
 python scripts\generate_meal_plan_html.py
@@ -24,12 +26,16 @@ python scripts\generate_meal_plan_html.py --plan data\plans\2026-W26.md --out si
 python scripts\generate_inventory_html.py
 python scripts\generate_inventory_html.py --out site\inventaire.html
 python scripts\score_plan.py
-python scripts\consume_plan.py
+python scripts\consume_meal.py consume --day "Jour 1"
+python scripts\consume_meal.py cancel --day "Jour 3" --note "pas mange"
+python scripts\consume_meal.py postpone --day "Jour 4" --note "reporte"
 ```
 
 Par defaut, `plan_week.py` genere un brouillon pour la semaine courante dans `data/drafts/`. Il ne genere pas la liste d'epicerie et n'ajoute pas les nouvelles recettes a la banque active.
 
 Quand le brouillon est approuve, `commit_plan.py` publie le plan dans `data/plans/`, active les recettes nouvelles approuvees dans `data/recipes/mains/`, puis genere la liste d'epicerie dans `data/grocery_lists/`.
+
+La liste d'epicerie passe par une validation deterministe qui fusionne les doublons surs et additionne les quantites compatibles. `validate_grocery_list.py --ai-review` ecrit une revue locale dans `data/grocery_reviews/` pour une relecture par Codex; cette revue ne modifie pas la liste.
 
 Sur demande, `generate_grocery_html.py` genere une version HTML mobile et interactive de la liste d'epicerie dans `data/grocery_lists_html/`.
 
@@ -68,7 +74,7 @@ Quand l'utilisateur demande "Planifie ma semaine", Codex doit:
 3. Executer `python scripts\plan_week.py` pour creer un brouillon.
 4. Ajuster le brouillon dans `data/drafts/` jusqu'a approbation.
 5. Executer `python scripts\commit_plan.py` pour publier le plan et generer l'epicerie.
-6. Si le plan est confirme comme consomme, executer `python scripts\consume_plan.py`.
+6. Quand un souper est confirme comme consomme, annule ou reporte, executer `python scripts\consume_meal.py <action> --day "Jour X"`.
 
 ## Diagramme Du Flux
 
@@ -92,14 +98,18 @@ flowchart TD
     commit["scripts/commit_plan.py<br/>Publie le plan approuve"]
     planOut["data/plans/{week}.md<br/>Plan committed"]
     activeRecipes["data/recipes/mains/<br/>Recettes pending activees"]
+    groceryValidation["scripts/grocery_validation.py<br/>Fusionne doublons et quantites compatibles"]
     grocery["data/grocery_lists/{week}.md<br/>Liste d'epicerie generee"]
+    groceryReviewCommand["scripts/validate_grocery_list.py<br/>Prepare revue Codex optionnelle"]
+    groceryReview["data/grocery_reviews/{week}.md<br/>Revue Codex optionnelle"]
     groceryHtml["data/grocery_lists_html/{week}.html<br/>Liste mobile interactive"]
     mealHtml["site/repas-semaine.html<br/>Repas et recettes"]
     inventoryHtml["site/inventaire.html<br/>Inventaire mobile"]
-    consumed{"Plan consomme?"}
-    consume["scripts/consume_plan.py<br/>Marque le plan comme consomme"]
-    historyUpdate["data/history/<br/>Historique mis a jour"]
-    inventoryUpdate["data/inventory/<br/>Modifie uniquement par consume_plan.py"]
+    consumed{"Souper consomme,<br/>annule ou reporte?"}
+    consume["scripts/consume_meal.py<br/>Traite un souper du plan"]
+    historyUpdate["data/history/meals.md<br/>Repas consommes"]
+    eventLog["data/history/meal_events.md<br/>Journal des evenements"]
+    inventoryUpdate["data/inventory/<br/>Modifie si consume seulement"]
 
     user --> validate
     profile --> validate
@@ -130,7 +140,10 @@ flowchart TD
 
     commit --> planOut
     commit --> activeRecipes
-    commit --> grocery
+    commit --> groceryValidation
+    groceryValidation --> grocery
+    grocery --> groceryReviewCommand
+    groceryReviewCommand -. optionnel .-> groceryReview
     grocery --> groceryHtml
     planOut --> mealHtml
     recipes -. lecture seulement .-> mealHtml
@@ -139,6 +152,7 @@ flowchart TD
     consumed -- non --> planOut
     consumed -- oui --> consume
     consume --> historyUpdate
+    consume --> eventLog
     consume --> inventoryUpdate
 
     inventory -. lecture seulement .-> plan
@@ -157,7 +171,7 @@ Le bloc Mermaid du README est la source de verite du diagramme. Si le bloc chang
 
 ## Regle Anti-Conflit
 
-Seul `scripts\consume_plan.py` modifie `data\inventory\`. Les agents de planification et d'epicerie lisent l'inventaire, mais ne le changent pas.
+Seul `scripts\consume_meal.py` modifie `data\inventory\`. Les agents de planification et d'epicerie lisent l'inventaire, mais ne le changent pas.
 
 ## Restrictions Alimentaires
 

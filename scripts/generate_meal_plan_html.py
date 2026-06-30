@@ -162,12 +162,37 @@ def render_recipe(recipe: dict | None, dinner: dict, plan_path: Path) -> str:
     """
 
 
-def render_agenda(dinners: list[dict]) -> str:
+def render_lunch_summary(lunch: dict | None) -> str:
+    if not lunch:
+        return ""
+
+    rows = []
+    kids = lunch.get("kids_lunch") or lunch.get("lunch")
+    adults = lunch.get("adult_lunch")
+    source = lunch.get("source")
+    if kids:
+        rows.append(f"<span><strong>Lunch enfant</strong> {esc(kids)}</span>")
+    if adults:
+        rows.append(f"<span><strong>Lunch adulte</strong> {esc(adults)}</span>")
+    if source:
+        rows.append(f"<small>{esc(source)}</small>")
+    if not rows:
+        return ""
+    return f"""
+              <div class="lunch-summary">
+                {"".join(rows)}
+              </div>
+    """
+
+
+def render_agenda(dinners: list[dict], lunches: list[dict]) -> str:
+    lunch_by_day = {lunch["day"]: lunch for lunch in lunches if lunch.get("day")}
     items = []
     for dinner in dinners:
         anchor = recipe_id(dinner["title"])
         side = dinner.get("side") or "aucun"
         notes = dinner.get("notes") or ""
+        lunch = lunch_by_day.get(dinner["day"])
         items.append(
             f"""
             <a class="agenda-card" href="#{anchor}">
@@ -175,6 +200,7 @@ def render_agenda(dinners: list[dict]) -> str:
               <strong>{esc(dinner["title"])}</strong>
               <span>{esc(side)}</span>
               <small>{esc(notes)}</small>
+              {render_lunch_summary(lunch)}
             </a>
             """
         )
@@ -182,7 +208,7 @@ def render_agenda(dinners: list[dict]) -> str:
 
 
 def render_html(plan_path: Path) -> str:
-    meta, dinners, _ = parse_plan(plan_path)
+    meta, dinners, lunches = parse_plan(plan_path)
     week = meta.get("week") or plan_path.stem
     recipes = recipe_lookup(plan_path)
     recipe_sections = "\n".join(render_recipe(recipes.get(dinner["title"]), dinner, plan_path) for dinner in dinners)
@@ -304,6 +330,28 @@ def render_html(plan_path: Path) -> str:
     }}
     .agenda-card strong {{ font-size: 18px; line-height: 1.25; }}
     .agenda-card small, .agenda-card span:not(.day) {{ color: var(--muted); }}
+    .lunch-summary {{
+      display: grid;
+      gap: 5px;
+      margin-top: 4px;
+      padding-top: 9px;
+      border-top: 1px solid #ece7dc;
+    }}
+    .lunch-summary span {{
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.35;
+    }}
+    .lunch-summary strong {{
+      display: block;
+      color: var(--accent);
+      font-size: 12px;
+      line-height: 1.2;
+    }}
+    .lunch-summary small {{
+      font-size: 12px;
+      line-height: 1.3;
+    }}
     .day, .eyebrow {{
       color: var(--accent);
       font-size: 13px;
@@ -389,7 +437,7 @@ def render_html(plan_path: Path) -> str:
     <section id="agenda" aria-labelledby="agenda-title">
       <h2 id="agenda-title">Agenda</h2>
       <div class="agenda">
-        {render_agenda(dinners)}
+        {render_agenda(dinners, lunches)}
       </div>
     </section>
     <section id="recettes" aria-labelledby="recipes-title">

@@ -4,14 +4,16 @@ Tu es responsable de l'apres-consommation.
 
 Objectifs:
 
-- Ajouter la semaine consommee a `data/history/meals.md`.
-- Enregistrer les `meal_family` consommees.
-- Deduire l'inventaire lorsque les ingredients sont utilises.
-- Conserver les statistiques pertinentes du plan.
+- Enregistrer chaque souper consomme, annule ou reporte dans `data/history/meal_events.md`.
+- Ajouter a `data/history/meals.md` seulement les `meal_family` des soupers reellement consommes.
+- Deduire l'inventaire seulement pour un souper confirme comme consomme.
+- Conserver les notes de deduction dans `data/inventory/consumption_notes.md`.
 
 Regles:
 
 - Ne jamais effacer l'historique existant.
 - Etre le seul agent autorise a modifier les fichiers `data/inventory/`.
-- Modifier l'inventaire de facon prudente seulement apres confirmation qu'un plan a ete consomme.
+- Utiliser `scripts/consume_meal.py`, pas `scripts/consume_plan.py`.
+- Modifier l'inventaire de facon prudente seulement apres confirmation qu'un souper precis a ete consomme.
+- Ne jamais deduire l'inventaire pour un souper annule ou reporte.
 - Si une quantite est ambigue, ajouter une note plutot que de detruire l'information.

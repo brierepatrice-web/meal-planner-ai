@@ -10,17 +10,30 @@ Toutes les donnees modifiables vivent dans `data/`.
 - `data/recipes/` contient les recettes principales, accompagnements et lunchs.
 - `data/inventory/` contient l'inventaire alimentaire.
 - `data/planning/` contient les contraintes hebdomadaires et achats recurrents.
-- `data/history/` conserve les semaines consommees.
+- `data/history/` conserve les repas consommes et les evenements de repas.
 - `data/drafts/` conserve les plans en brouillon et les recettes pending non encore actives.
 - `data/plans/` et `data/grocery_lists/` conservent les sorties generees.
+- `data/grocery_reviews/` conserve les revues locales optionnelles preparees pour Codex.
 
 ## Regle D'Ecriture De L'Inventaire
 
-Un seul composant peut modifier `data/inventory/`: le Consumption Agent, via `scripts/consume_plan.py`.
+Un seul composant peut modifier `data/inventory/`: le Consumption Agent, via `scripts/consume_meal.py`.
 
 Les autres agents peuvent lire l'inventaire pour planifier, scorer ou eviter des achats inutiles, mais ils ne doivent jamais deduire, supprimer ou modifier des articles d'inventaire.
 
 Le Grocery Agent retire seulement des articles de la liste d'epicerie proposee lorsqu'ils sont deja disponibles; il ne retire rien de l'inventaire.
+
+`scripts/consume_meal.py` agit sur un seul souper du plan, identifie par `--day "Jour 1"` a `--day "Jour 5"`.
+
+Commandes supportees:
+
+```powershell
+python scripts\consume_meal.py consume --day "Jour 1"
+python scripts\consume_meal.py cancel --day "Jour 3" --note "pas mange"
+python scripts\consume_meal.py postpone --day "Jour 4" --note "reporte"
+```
+
+`consume` ajoute la `meal_family` a `data/history/meals.md`, ecrit l'evenement dans `data/history/meal_events.md`, puis deduit seulement les ingredients du souper choisi et de ses accompagnements. `cancel` et `postpone` ecrivent seulement l'evenement; ils ne comptent pas comme repas consommes et ne modifient pas l'inventaire.
 
 ## Recettes
 
@@ -114,6 +127,8 @@ Les seuls modes supportes sont:
 Les recettes nouvelles proposees restent pending dans `data/drafts/<week>_recipes/` jusqu'au commit. Elles peuvent etre modifiees ou remplacees avant approbation.
 
 `scripts/commit_plan.py` publie le brouillon approuve dans `data/plans/`, active les recettes pending utilisees par le plan, puis genere la liste d'epicerie.
+
+La generation d'epicerie applique `scripts/grocery_validation.py` avant l'ecriture finale pour fusionner les doublons surs et additionner les quantites compatibles. Les cas ambigus restent visibles et peuvent etre envoyes a Codex avec `scripts/validate_grocery_list.py --ai-review`, qui ecrit une revue locale sans modifier l'inventaire ni la liste officielle.
 
 Le planificateur privilegie les recettes principales existantes. Quand il y a au moins quatre recettes admissibles, il choisit quatre soupers existants et propose un nouveau souper local deterministe en pending. Si la banque est insuffisante, il genere seulement le minimum necessaire pour remplir cinq soupers.
 

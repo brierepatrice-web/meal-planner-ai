@@ -34,6 +34,7 @@ REQUIRED_FILES = [
     DATA / "planning" / "weekly_constraints.md",
     DATA / "planning" / "recurring_groceries.md",
     DATA / "history" / "meals.md",
+    DATA / "history" / "meal_events.md",
 ]
 
 
