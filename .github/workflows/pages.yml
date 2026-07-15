@@ -36,7 +36,7 @@ jobs:
 
       - name: Generate meal plan HTML
         run: python scripts/generate_meal_plan_html.py --plan "$PLAN_PATH" --out site/repas-semaine.html
-        
+
       - name: Generate inventory HTML
         run: python scripts/generate_inventory_html.py --out site/inventaire.html
 

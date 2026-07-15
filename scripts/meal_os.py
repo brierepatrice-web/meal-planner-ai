@@ -216,6 +216,8 @@ def purchase_quantity_for_units(value: str, units: int) -> int:
 def read_inventory() -> dict[str, list[str]]:
     inventory = {}
     for path in sorted((DATA / "inventory").glob("*.md")):
+        if path.name == "consumption_notes.md":
+            continue
         inventory[path.stem] = read_bullets(path)
     return inventory
 
