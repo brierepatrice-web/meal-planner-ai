@@ -28,7 +28,7 @@ generated: true
 ## Ingredients
 
 - saucisses italiennes | Viandes et poissons | 5
-- pates courtes | Epicerie seche | 450 g
+- pates courtes | Feculents | 450 g
 - poivrons | Fruits et legumes | 3
 - courgettes | Fruits et legumes | 2
 - sauce tomate | Epicerie seche | 1 pot

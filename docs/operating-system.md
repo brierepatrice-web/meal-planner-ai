@@ -136,7 +136,7 @@ Les plans utilisent des positions flexibles (`Jour 1` a `Jour 5`) plutot que des
 
 Chaque plan contient toujours les diners adultes. En mode `ecole`, les lunchs enfants doivent etre froids. En mode `pas_ecole`, aucun lunch enfant n'est requis.
 
-`leftover_friendly` ne suffit pas a lui seul pour produire un lunch de restants. Le planificateur utilise les restants seulement si la recette declare des portions leftover disponibles, un style compatible et au moins un public admissible (`kids_leftover_ok` ou `adult_leftover_ok`). Une portion leftover represente un lunch pour une personne.
+`leftover_friendly` ne suffit pas a lui seul pour produire un lunch de restants. Le planificateur utilise les restants seulement si la recette declare des portions leftover disponibles, un style compatible et au moins un public admissible (`kids_leftover_ok` ou `adult_leftover_ok`). Une portion leftover represente un lunch pour une personne. Un lunch de restants peut seulement provenir d'un souper d'un jour precedent; le diner de `Jour 1` est donc autonome, et aucun lunch ne peut utiliser les restants du souper du meme jour.
 
 Un meme type de lunch ne doit pas apparaitre plus de deux fois par semaine dans la colonne enfants ni plus de deux fois dans la colonne adultes. Si les restants produisent trop de wraps ou de lunchs rechauffes, le planificateur alterne avec des options froides autonomes.
 

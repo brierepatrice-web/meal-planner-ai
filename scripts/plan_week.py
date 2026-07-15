@@ -72,13 +72,13 @@ GENERATED_MAIN_RECIPES = [
         "mode_tags": ["quick", "bbq", "grill", "leftover_friendly", "lunch_friendly", "batch_cooking"],
         "ingredients": [
             ("poitrines de poulet", "Viandes et poissons", "4"),
-            ("riz basmati", "Epicerie seche", "2 tasses"),
+            ("riz basmati", "Feculents", "2 tasses"),
             ("huile d'olive", "Condiments", "5 c. a soupe"),
             ("citron", "Fruits et legumes", "2"),
             ("ail", "Fruits et legumes", "3 gousses"),
-            ("paprika fume", "Condiments", "2 c. a the"),
-            ("origan seche", "Condiments", "2 1/2 c. a the"),
-            ("cumin", "Condiments", "2 c. a the"),
+            ("paprika fume", "Epices", "2 c. a the"),
+            ("origan seche", "Epices", "2 1/2 c. a the"),
+            ("cumin", "Epices", "2 c. a the"),
             ("yogourt grec", "Produits laitiers", "1 tasse"),
             ("miel", "Condiments", "1 c. a the"),
             ("aneth ou persil frais", "Fruits et legumes", "2 c. a soupe"),
@@ -86,7 +86,7 @@ GENERATED_MAIN_RECIPES = [
             ("tomates cerises", "Fruits et legumes", "2 tasses"),
             ("oignon rouge", "Fruits et legumes", "1"),
             ("pois chiches", "Epicerie seche", "1 boite 540 ml"),
-            ("poudre d'ail", "Condiments", "1/2 c. a the"),
+            ("poudre d'ail", "Epices", "1/2 c. a the"),
             ("feta emiettee", "Produits laitiers", "3/4 tasse"),
             ("persil frais", "Fruits et legumes", "au besoin"),
             ("menthe fraiche", "Fruits et legumes", "facultatif"),
@@ -113,7 +113,7 @@ GENERATED_MAIN_RECIPES = [
         "mode_tags": ["quick", "taco", "portable", "leftover_friendly"],
         "ingredients": [
             ("boeuf hache", "Viandes et poissons", "600 g"),
-            ("epices a tacos", "Epicerie seche", "1 sachet"),
+            ("epices a tacos", "Epices", "1 sachet"),
             ("tortillas", "Boulangerie", "10"),
             ("haricots noirs", "Epicerie seche", "1 conserve"),
             ("laitue", "Fruits et legumes", "1"),
@@ -142,7 +142,7 @@ GENERATED_MAIN_RECIPES = [
         "mode_tags": ["quick", "light"],
         "ingredients": [
             ("filets de saumon", "Viandes et poissons", "4"),
-            ("riz basmati", "Epicerie seche", "1 1/2 tasse"),
+            ("riz basmati", "Feculents", "1 1/2 tasse"),
             ("sauce soya", "Condiments", "1/4 tasse"),
             ("sirop d'erable", "Condiments", "2 c. a soupe"),
             ("citron", "Fruits et legumes", "1"),
@@ -169,7 +169,7 @@ GENERATED_MAIN_RECIPES = [
         "mode_tags": ["leftover_friendly", "batch_cooking"],
         "ingredients": [
             ("saucisses italiennes", "Viandes et poissons", "5"),
-            ("pates courtes", "Epicerie seche", "450 g"),
+            ("pates courtes", "Feculents", "450 g"),
             ("poivrons", "Fruits et legumes", "3"),
             ("courgettes", "Fruits et legumes", "2"),
             ("sauce tomate", "Epicerie seche", "1 pot"),
@@ -228,7 +228,7 @@ GENERATED_MAIN_RECIPES = [
             ("tomates en des", "Epicerie seche", "1 conserve"),
             ("mais", "Surgeles", "1 tasse"),
             ("poivron", "Fruits et legumes", "1"),
-            ("epices chili", "Epicerie seche", "2 c. a soupe"),
+            ("epices chili", "Epices", "2 c. a soupe"),
         ],
     },
     {
@@ -282,6 +282,139 @@ GENERATED_MAIN_RECIPES = [
             ("jambon", "Viandes et poissons", "250 g"),
             ("fromage suisse", "Produits laitiers", "1 tasse"),
             ("lait", "Produits laitiers", "1/2 tasse"),
+        ],
+    },
+    {
+        "title": "Burgers de poulet croustillant et crudites",
+        "meal_family": "burger poulet",
+        "protein_type": "chicken",
+        "prep_time": 10,
+        "cook_time": 20,
+        "active_time": 20,
+        "preferred_seasons": ["saison_chaude"],
+        "effort_level": "low",
+        "leftover_friendly": False,
+        "leftover_lunch_portions": 0,
+        "leftover_lunch_style": "none",
+        "kids_leftover_ok": False,
+        "adult_leftover_ok": False,
+        "freezes_well": False,
+        "suggested_side_dishes": ["Crudites"],
+        "contains_vegetable": True,
+        "contains_starch": True,
+        "mode_tags": ["burger", "quick", "bbq"],
+        "ingredients": [
+            ("boulettes de hamburger au poulet frit", "Viandes et poissons", "4"),
+            ("pains a hamburger", "Boulangerie", "4"),
+            ("fromage cheddar", "Produits laitiers", "4 tranches"),
+            ("laitue", "Fruits et legumes", "1"),
+            ("mayonnaise", "Condiments", "au besoin"),
+        ],
+    },
+    {
+        "title": "Boulettes italiennes, sauce tomate et riz",
+        "meal_family": "boulettes italiennes",
+        "protein_type": "pork",
+        "prep_time": 10,
+        "cook_time": 25,
+        "active_time": 15,
+        "preferred_seasons": ["saison_chaude", "saison_froide"],
+        "effort_level": "low",
+        "leftover_friendly": True,
+        "leftover_lunch_portions": 2,
+        "leftover_lunch_style": "restants rechauffes",
+        "kids_leftover_ok": False,
+        "adult_leftover_ok": True,
+        "freezes_well": True,
+        "suggested_side_dishes": ["Legumes de saison"],
+        "contains_vegetable": False,
+        "contains_starch": True,
+        "mode_tags": ["quick", "leftover_friendly", "batch_cooking"],
+        "ingredients": [
+            ("boulettes de viande italienne", "Viandes et poissons", "600 g"),
+            ("riz", "Feculents", "2 tasses"),
+            ("sauce tomate", "Epicerie seche", "1 pot"),
+            ("parmesan", "Produits laitiers", "1/2 tasse"),
+        ],
+    },
+    {
+        "title": "Cotelettes de porc BBQ, pommes de terre et salade",
+        "meal_family": "cotelettes porc bbq",
+        "protein_type": "pork",
+        "prep_time": 15,
+        "cook_time": 30,
+        "active_time": 20,
+        "preferred_seasons": ["saison_chaude"],
+        "effort_level": "low",
+        "leftover_friendly": True,
+        "leftover_lunch_portions": 2,
+        "leftover_lunch_style": "bol froid",
+        "kids_leftover_ok": True,
+        "adult_leftover_ok": True,
+        "freezes_well": False,
+        "suggested_side_dishes": [],
+        "contains_vegetable": True,
+        "contains_starch": True,
+        "mode_tags": ["bbq", "grill", "leftover_friendly"],
+        "ingredients": [
+            ("cotelettes de porc", "Viandes et poissons", "4"),
+            ("sauce BBQ", "Condiments", "1/3 tasse"),
+            ("pommes de terre", "Fruits et legumes", "800 g"),
+            ("melange salade", "Fruits et legumes", "1 sac"),
+            ("vinaigrette", "Condiments", "1/4 tasse"),
+        ],
+    },
+    {
+        "title": "Pates au porc hache, tomates et epinards",
+        "meal_family": "pates porc hache",
+        "protein_type": "pork",
+        "prep_time": 15,
+        "cook_time": 25,
+        "active_time": 25,
+        "preferred_seasons": ["saison_chaude"],
+        "effort_level": "low",
+        "leftover_friendly": True,
+        "leftover_lunch_portions": 4,
+        "leftover_lunch_style": "restants rechauffes",
+        "kids_leftover_ok": False,
+        "adult_leftover_ok": True,
+        "freezes_well": True,
+        "suggested_side_dishes": [],
+        "contains_vegetable": True,
+        "contains_starch": True,
+        "mode_tags": ["quick", "leftover_friendly", "batch_cooking"],
+        "ingredients": [
+            ("porc hache", "Viandes et poissons", "1 lb"),
+            ("pates courtes", "Feculents", "450 g"),
+            ("tomates en des", "Epicerie seche", "1 conserve"),
+            ("epinards", "Fruits et legumes", "1 sac"),
+            ("oignon", "Fruits et legumes", "1"),
+            ("parmesan", "Produits laitiers", "1/2 tasse"),
+        ],
+    },
+    {
+        "title": "T-bones grilles, legumes et pain",
+        "meal_family": "tbone grille",
+        "protein_type": "beef",
+        "prep_time": 10,
+        "cook_time": 20,
+        "active_time": 15,
+        "preferred_seasons": ["saison_chaude"],
+        "effort_level": "low",
+        "leftover_friendly": False,
+        "leftover_lunch_portions": 0,
+        "leftover_lunch_style": "none",
+        "kids_leftover_ok": False,
+        "adult_leftover_ok": False,
+        "freezes_well": False,
+        "suggested_side_dishes": ["Legumes de saison", "Pain"],
+        "contains_vegetable": False,
+        "contains_starch": False,
+        "mode_tags": ["bbq", "grill", "quick"],
+        "ingredients": [
+            ("t-bone", "Viandes et poissons", "1"),
+            ("huile d'olive", "Condiments", "1 c. a soupe"),
+            ("sel et poivre", "Epices", "au besoin"),
         ],
     },
 ]
@@ -554,7 +687,15 @@ def use_leftover_lunch(dinner: dict, person: str, counts: dict[str, int]) -> tup
     dinner["leftover_lunch_portions_used"] += 1
     dinner["leftover_lunch_portions_remaining"] -= 1
     lunch = f"{LEFTOVER_LUNCH_LABELS.get(style, 'Restants')} - {dinner['title']}"
-    return lunch, style, "restants"
+    return lunch, style, f"restants de {dinner['day']}"
+
+
+def use_recent_leftover_lunch(previous_dinners: list[dict], person: str, counts: dict[str, int]) -> tuple[str, str, str] | None:
+    for dinner in reversed(previous_dinners):
+        leftover = use_leftover_lunch(dinner, person, counts)
+        if leftover:
+            return leftover
+    return None
 
 
 def build_lunches(dinners: list[dict], mode_rules: dict | None = None) -> list[dict]:
@@ -565,9 +706,10 @@ def build_lunches(dinners: list[dict], mode_rules: dict | None = None) -> list[d
     kids_counts: dict[str, int] = {}
     adult_counts: dict[str, int] = {}
     lunches = []
+    previous_dinners: list[dict] = []
     for dinner in dinners:
         if requires_child_lunches:
-            kids_leftover = use_leftover_lunch(dinner, "kids", kids_counts)
+            kids_leftover = use_recent_leftover_lunch(previous_dinners, "kids", kids_counts)
             if kids_leftover:
                 kids, kids_type, kids_source = kids_leftover
             elif cold_lunch:
@@ -587,7 +729,7 @@ def build_lunches(dinners: list[dict], mode_rules: dict | None = None) -> list[d
             kids_type = "aucun"
             kids_source = "non requis"
 
-        adult_leftover = use_leftover_lunch(dinner, "adults", adult_counts)
+        adult_leftover = use_recent_leftover_lunch(previous_dinners, "adults", adult_counts)
         if adult_leftover:
             adults, adult_type, adult_source = adult_leftover
         elif adult_lunch:
@@ -600,9 +742,10 @@ def build_lunches(dinners: list[dict], mode_rules: dict | None = None) -> list[d
                 adults, adult_type, adult_source = choose_lunch_option(ADULT_FALLBACK_LUNCHES, adult_counts)
         else:
             adults, adult_type, adult_source = choose_lunch_option(ADULT_FALLBACK_LUNCHES, adult_counts)
-        used = dinner.get("leftover_lunch_portions_used", 0)
-        capacity = dinner.get("leftover_lunch_portions", 0)
-        diagnostic = f"restants: {used}/{capacity} portions utilisees" if capacity else "restants: 0/0 portions"
+        leftover_used_today = int(kids_source.startswith("restants de ")) + int(
+            adult_source.startswith("restants de ")
+        )
+        diagnostic = f"restants utilises: {leftover_used_today}"
         if requires_child_lunches:
             source = kids_source if kids_source == adult_source else f"enfants: {kids_source}; adultes: {adult_source}"
         else:
@@ -617,6 +760,7 @@ def build_lunches(dinners: list[dict], mode_rules: dict | None = None) -> list[d
                 "source": f"{source}; {diagnostic}",
             }
         )
+        previous_dinners.append(dinner)
     return lunches
 
 
@@ -625,11 +769,16 @@ def build_plan(week: str, season: str) -> tuple[dict, list[dict], list[dict], li
     modes = read_modes()
     mode_rules = active_mode_rules(modes)
     existing_recipes = choose_recipes(season, mode_rules)
-    generated_target = 1 if len(existing_recipes) >= 4 else len(PLAN_DAYS) - len(existing_recipes)
+    seasonal_existing_recipes = [
+        recipe for recipe in existing_recipes if season in recipe.get("preferred_seasons", [])
+    ]
+    generated_target = (
+        1 if len(seasonal_existing_recipes) >= 4 else len(PLAN_DAYS) - len(seasonal_existing_recipes)
+    )
     existing_families = {recipe["meal_family"] for recipe in read_recipes("main")} | excluded_meal_families()
     generated_recipes = generate_missing_recipes(generated_target, season, existing_families)
     existing_target = len(PLAN_DAYS) - len(generated_recipes)
-    recipes = existing_recipes[:existing_target] + generated_recipes
+    recipes = seasonal_existing_recipes[:existing_target] + generated_recipes
     if len(recipes) < len(PLAN_DAYS):
         print("Not enough eligible recipes to fill the plan.")
         sys.exit(1)

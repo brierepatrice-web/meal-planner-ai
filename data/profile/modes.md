@@ -1,6 +1,6 @@
 # Active Modes
 
-- ecole
+- pas_ecole
 
 ## How To Edit
 

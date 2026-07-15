@@ -28,7 +28,7 @@ generated: true
 ## Ingredients
 
 - filets de saumon | Viandes et poissons | 4
-- riz basmati | Epicerie seche | 1 1/2 tasse
+- riz basmati | Feculents | 1 1/2 tasse
 - sauce soya | Condiments | 1/4 tasse
 - sirop d'erable | Condiments | 2 c. a soupe
 - citron | Fruits et legumes | 1

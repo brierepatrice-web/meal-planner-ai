@@ -28,13 +28,13 @@ generated: true
 ## Ingredients
 
 - poitrines de poulet | Viandes et poissons | 4
-- riz basmati | Epicerie seche | 2 tasses
+- riz basmati | Feculents | 2 tasses
 - huile d'olive | Condiments | 5 c. a soupe
 - citron | Fruits et legumes | 2
 - ail | Fruits et legumes | 3 gousses
-- paprika fume | Condiments | 2 c. a the
-- origan seche | Condiments | 2 1/2 c. a the
-- cumin | Condiments | 2 c. a the
+- paprika fume | Epices | 2 c. a the
+- origan seche | Epices | 2 1/2 c. a the
+- cumin | Epices | 2 c. a the
 - yogourt grec | Produits laitiers | 1 tasse
 - miel | Condiments | 1 c. a the
 - aneth ou persil frais | Fruits et legumes | 2 c. a soupe
@@ -42,7 +42,7 @@ generated: true
 - tomates cerises | Fruits et legumes | 2 tasses
 - oignon rouge | Fruits et legumes | 1
 - pois chiches | Epicerie seche | 1 boite 540 ml
-- poudre d'ail | Condiments | 1/2 c. a the
+- poudre d'ail | Epices | 1/2 c. a the
 - feta emiettee | Produits laitiers | 3/4 tasse
 - persil frais | Fruits et legumes | au besoin
 - menthe fraiche | Fruits et legumes | facultatif

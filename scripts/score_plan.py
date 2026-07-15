@@ -59,9 +59,13 @@ def score_plan(path):
     )
     leftover_used = 0
     for lunch in lunches:
-        match = re.search(r"restants: (\d+)/(\d+) portions", lunch.get("source", ""))
-        if match:
-            leftover_used += int(match.group(1))
+        source = lunch.get("source", "")
+        used_match = re.search(r"restants utilises: (\d+)", source)
+        legacy_match = re.search(r"restants: (\d+)/(\d+) portions", source)
+        if used_match:
+            leftover_used += int(used_match.group(1))
+        elif legacy_match:
+            leftover_used += int(legacy_match.group(1))
     quick_matches = sum(1 for dinner in dinners if "OK" in dinner.get("notes", ""))
 
     scores = {

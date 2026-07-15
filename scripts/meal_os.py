@@ -44,8 +44,10 @@ GROCERY_CATEGORIES = [
     "Viandes et poissons",
     "Produits laitiers",
     "Boulangerie",
+    "Feculents",
     "Epicerie seche",
     "Surgeles",
+    "Epices",
     "Condiments",
     "Autres",
 ]

@@ -28,12 +28,12 @@ class GroceryValidationTests(unittest.TestCase):
 
     def test_merges_same_numeric_unit(self) -> None:
         categories = empty_categories()
-        categories["Epicerie seche"] = ["- riz basmati (2 tasses)", "- riz basmati (1 tasse)"]
+        categories["Feculents"] = ["- riz basmati (2 tasses)", "- riz basmati (1 tasse)"]
 
         result = validate_grocery_items(categories, [])
 
-        self.assertIn("- riz basmati (3 tasses)", result.categories["Epicerie seche"])
-        self.assertEqual(len(result.categories["Epicerie seche"]), 1)
+        self.assertIn("- riz basmati (3 tasses)", result.categories["Feculents"])
+        self.assertEqual(len(result.categories["Feculents"]), 1)
 
     def test_does_not_merge_unmergeable_units(self) -> None:
         categories = empty_categories()
@@ -70,9 +70,28 @@ class GroceryValidationTests(unittest.TestCase):
         self.assertIn("- concombre (2)", result.categories["Fruits et legumes"])
         self.assertIn("- pois chiches (1 boite 540 ml)", result.categories["Epicerie seche"])
         self.assertIn("- feta emiettee (3/4 tasse)", result.categories["Produits laitiers"])
-        self.assertIn("- riz basmati (3 tasses)", result.categories["Epicerie seche"])
-        self.assertNotIn("- riz basmati (2 tasses)", result.categories["Epicerie seche"])
-        self.assertNotIn("- riz basmati (1 tasse)", result.categories["Epicerie seche"])
+        self.assertIn("- riz basmati (3 tasses)", result.categories["Feculents"])
+        self.assertIn("- pates courtes (450 g)", result.categories["Feculents"])
+        self.assertIn("- haricots noirs (1 conserve)", result.categories["Epicerie seche"])
+        self.assertNotIn("- riz basmati (3 tasses)", result.categories["Epicerie seche"])
+        self.assertNotIn("- riz basmati (2 tasses)", result.categories["Feculents"])
+        self.assertNotIn("- riz basmati (1 tasse)", result.categories["Feculents"])
+
+    def test_current_week_spices_have_dedicated_category(self) -> None:
+        plan_path = DATA / "plans" / "2026-W26.md"
+        categories, skipped = raw_grocery_items_for_plan(plan_path)
+
+        result = validate_grocery_items(categories, skipped)
+
+        self.assertIn("- cumin (2 c. a the)", result.categories["Epices"])
+        self.assertIn("- paprika fume (2 c. a the)", result.categories["Epices"])
+        self.assertIn("- origan seche (2 1/2 c. a the)", result.categories["Epices"])
+        self.assertIn("- poudre d'ail (1/2 c. a the)", result.categories["Epices"])
+        self.assertIn("- epices a tacos (1 sachet)", result.categories["Epices"])
+        self.assertIn("- huile d'olive (5 c. a soupe)", result.categories["Condiments"])
+        self.assertIn("- salsa (1 pot)", result.categories["Condiments"])
+        self.assertNotIn("- cumin (2 c. a the)", result.categories["Condiments"])
+        self.assertNotIn("- epices a tacos (1 sachet)", result.categories["Epicerie seche"])
 
 
 if __name__ == "__main__":

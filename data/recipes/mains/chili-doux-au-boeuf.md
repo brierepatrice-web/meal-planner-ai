@@ -32,7 +32,7 @@ generated: true
 - tomates en des | Epicerie seche | 1 conserve
 - mais | Surgeles | 1 tasse
 - poivron | Fruits et legumes | 1
-- epices chili | Epicerie seche | 2 c. a soupe
+- epices chili | Epices | 2 c. a soupe
 
 ## Methode
 

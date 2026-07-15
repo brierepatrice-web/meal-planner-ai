@@ -28,7 +28,7 @@ generated: true
 ## Ingredients
 
 - bacon | Viandes et poissons | 250 g
-- pates courtes | Epicerie seche | 450 g
+- pates courtes | Feculents | 450 g
 - poivrons | Fruits et legumes | 2
 - petits pois | Surgeles | 1 tasse
 - creme | Produits laitiers | 1 tasse

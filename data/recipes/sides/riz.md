@@ -19,7 +19,7 @@ category: side
 
 ## Ingredients
 
-- riz basmati | Epicerie seche | 1 tasse
+- riz basmati | Feculents | 1 tasse
 
 ## Methode
 

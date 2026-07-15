@@ -178,11 +178,7 @@ def render_lunch_summary(lunch: dict | None) -> str:
         rows.append(f"<small>{esc(source)}</small>")
     if not rows:
         return ""
-    return f"""
-              <div class="lunch-summary">
-                {"".join(rows)}
-              </div>
-    """
+    return '<div class="lunch-summary">' + "".join(rows) + "</div>"
 
 
 def render_agenda(dinners: list[dict], lunches: list[dict]) -> str:

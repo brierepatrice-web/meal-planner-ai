@@ -115,6 +115,28 @@
     }
     .agenda-card strong { font-size: 18px; line-height: 1.25; }
     .agenda-card small, .agenda-card span:not(.day) { color: var(--muted); }
+    .lunch-summary {
+      display: grid;
+      gap: 5px;
+      margin-top: 4px;
+      padding-top: 9px;
+      border-top: 1px solid #ece7dc;
+    }
+    .lunch-summary span {
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+    .lunch-summary strong {
+      display: block;
+      color: var(--accent);
+      font-size: 12px;
+      line-height: 1.2;
+    }
+    .lunch-summary small {
+      font-size: 12px;
+      line-height: 1.3;
+    }
     .day, .eyebrow {
       color: var(--accent);
       font-size: 13px;
@@ -206,6 +228,7 @@
               <strong>Bol mediterraneen au poulet BBQ, riz basmati et sauce au yogourt citron</strong>
               <span>aucun</span>
               <small>20 min actif; OK; existant</small>
+              <div class="lunch-summary"><span><strong>Lunch enfant</strong> Sandwich froid jambon-fromage, fruit et yogourt</span><span><strong>Lunch adulte</strong> Bol froid poulet, riz et crudites</span><small>autonome; restants utilises: 0</small></div>
             </a>
             
 
@@ -214,6 +237,7 @@
               <strong>Tacos de boeuf et haricots</strong>
               <span>Crudites</span>
               <small>25 min actif; OK; existant</small>
+              <div class="lunch-summary"><span><strong>Lunch enfant</strong> Bol froid de restants - Bol mediterraneen au poulet BBQ, riz basmati et sauce au yogourt citron</span><span><strong>Lunch adulte</strong> Bol froid de restants - Bol mediterraneen au poulet BBQ, riz basmati et sauce au yogourt citron</span><small>restants de Jour 1; restants utilises: 2</small></div>
             </a>
             
 
@@ -222,6 +246,7 @@
               <strong>Poulet BBQ, pommes de terre et salade</strong>
               <span>aucun</span>
               <small>20 min actif; OK; existant</small>
+              <div class="lunch-summary"><span><strong>Lunch enfant</strong> Wrap froid de restants - Tacos de boeuf et haricots</span><span><strong>Lunch adulte</strong> Wrap froid de restants - Tacos de boeuf et haricots</span><small>restants de Jour 2; restants utilises: 2</small></div>
             </a>
             
 
@@ -230,6 +255,7 @@
               <strong>Frittata jambon fromage</strong>
               <span>Legumes de saison, Riz</span>
               <small>15 min actif; OK; existant</small>
+              <div class="lunch-summary"><span><strong>Lunch enfant</strong> Bol froid de restants - Poulet BBQ, pommes de terre et salade</span><span><strong>Lunch adulte</strong> Wrap froid de restants - Tacos de boeuf et haricots</span><small>enfants: restants de Jour 3; adultes: restants de Jour 2; restants utilises: 2</small></div>
             </a>
             
 
@@ -238,6 +264,7 @@
               <strong>Pates bacon, poivrons et petits pois</strong>
               <span>aucun</span>
               <small>25 min actif; OK; nouveau</small>
+              <div class="lunch-summary"><span><strong>Lunch enfant</strong> Sandwich froid de restants - Frittata jambon fromage</span><span><strong>Lunch adulte</strong> Salade repas poulet, riz et legumes</span><small>enfants: restants de Jour 4; adultes: autonome; restants utilises: 1</small></div>
             </a>
             
       </div>
@@ -266,13 +293,13 @@
           <h3>Ingredients</h3>
           <ul class="ingredients">
             <li><span>poitrines de poulet</span><strong>4</strong><small>Viandes et poissons</small></li>
-<li><span>riz basmati</span><strong>2 tasses</strong><small>Epicerie seche</small></li>
+<li><span>riz basmati</span><strong>2 tasses</strong><small>Feculents</small></li>
 <li><span>huile d&#x27;olive</span><strong>5 c. a soupe</strong><small>Condiments</small></li>
 <li><span>citron</span><strong>2</strong><small>Fruits et legumes</small></li>
 <li><span>ail</span><strong>3 gousses</strong><small>Fruits et legumes</small></li>
-<li><span>paprika fume</span><strong>2 c. a the</strong><small>Condiments</small></li>
-<li><span>origan seche</span><strong>2 1/2 c. a the</strong><small>Condiments</small></li>
-<li><span>cumin</span><strong>2 c. a the</strong><small>Condiments</small></li>
+<li><span>paprika fume</span><strong>2 c. a the</strong><small>Epices</small></li>
+<li><span>origan seche</span><strong>2 1/2 c. a the</strong><small>Epices</small></li>
+<li><span>cumin</span><strong>2 c. a the</strong><small>Epices</small></li>
 <li><span>yogourt grec</span><strong>1 tasse</strong><small>Produits laitiers</small></li>
 <li><span>miel</span><strong>1 c. a the</strong><small>Condiments</small></li>
 <li><span>aneth ou persil frais</span><strong>2 c. a soupe</strong><small>Fruits et legumes</small></li>
@@ -280,7 +307,7 @@
 <li><span>tomates cerises</span><strong>2 tasses</strong><small>Fruits et legumes</small></li>
 <li><span>oignon rouge</span><strong>1</strong><small>Fruits et legumes</small></li>
 <li><span>pois chiches</span><strong>1 boite 540 ml</strong><small>Epicerie seche</small></li>
-<li><span>poudre d&#x27;ail</span><strong>1/2 c. a the</strong><small>Condiments</small></li>
+<li><span>poudre d&#x27;ail</span><strong>1/2 c. a the</strong><small>Epices</small></li>
 <li><span>feta emiettee</span><strong>3/4 tasse</strong><small>Produits laitiers</small></li>
 <li><span>persil frais</span><strong>au besoin</strong><small>Fruits et legumes</small></li>
 <li><span>menthe fraiche</span><strong>facultatif</strong><small>Fruits et legumes</small></li>
@@ -326,7 +353,7 @@
           <h3>Ingredients</h3>
           <ul class="ingredients">
             <li><span>boeuf hache</span><strong>600 g</strong><small>Viandes et poissons</small></li>
-<li><span>epices a tacos</span><strong>1 sachet</strong><small>Epicerie seche</small></li>
+<li><span>epices a tacos</span><strong>1 sachet</strong><small>Epices</small></li>
 <li><span>tortillas</span><strong>10</strong><small>Boulangerie</small></li>
 <li><span>haricots noirs</span><strong>1 conserve</strong><small>Epicerie seche</small></li>
 <li><span>laitue</span><strong>1</strong><small>Fruits et legumes</small></li>
@@ -446,7 +473,7 @@
                 <div class="side-block">
                   <h4>Riz</h4>
                   <ul class="ingredients side-ingredients">
-                    <li><span>riz basmati</span><strong>1 tasse</strong><small>Epicerie seche</small></li>
+                    <li><span>riz basmati</span><strong>1 tasse</strong><small>Feculents</small></li>
                   </ul>
                 </div>
                 
@@ -489,7 +516,7 @@
           <h3>Ingredients</h3>
           <ul class="ingredients">
             <li><span>bacon</span><strong>250 g</strong><small>Viandes et poissons</small></li>
-<li><span>pates courtes</span><strong>450 g</strong><small>Epicerie seche</small></li>
+<li><span>pates courtes</span><strong>450 g</strong><small>Feculents</small></li>
 <li><span>poivrons</span><strong>2</strong><small>Fruits et legumes</small></li>
 <li><span>petits pois</span><strong>1 tasse</strong><small>Surgeles</small></li>
 <li><span>creme</span><strong>1 tasse</strong><small>Produits laitiers</small></li>

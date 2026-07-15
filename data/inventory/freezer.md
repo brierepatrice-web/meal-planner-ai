@@ -1,8 +1,9 @@
 # Freezer
 
-- boeuf hache | 1 lb
-- filet de porc marine | 4 portions
 - boulettes de hamburger au poulet frit | 6
 - boulettes de viande italienne | 600 g
-- bacon | 2 x 1 lb
-- saucisses italiennes | 2 paquets de 4
+- t-bone | 1
+- bacon | 2 lb
+- cotelettes de porc | 8
+- porc hache | 1 lb
+- pains a hamburger | 8

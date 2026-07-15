@@ -28,7 +28,7 @@ generated: true
 ## Ingredients
 
 - boeuf hache | Viandes et poissons | 600 g
-- epices a tacos | Epicerie seche | 1 sachet
+- epices a tacos | Epices | 1 sachet
 - tortillas | Boulangerie | 10
 - haricots noirs | Epicerie seche | 1 conserve
 - laitue | Fruits et legumes | 1
