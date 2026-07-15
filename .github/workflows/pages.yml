@@ -28,12 +28,15 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Select latest meal plan
+        run: echo "PLAN_PATH=$(find data/plans -maxdepth 1 -name '*.md' -print | sort | tail -n 1)" >> "$GITHUB_ENV"
+
       - name: Generate grocery HTML
-        run: python scripts/generate_grocery_html.py --plan data/plans/2026-W26.md --out site/liste-epicerie.html
+        run: python scripts/generate_grocery_html.py --plan "$PLAN_PATH" --out site/liste-epicerie.html
 
       - name: Generate meal plan HTML
-        run: python scripts/generate_meal_plan_html.py --plan data/plans/2026-W26.md --out site/repas-semaine.html
-
+        run: python scripts/generate_meal_plan_html.py --plan "$PLAN_PATH" --out site/repas-semaine.html
+        
       - name: Generate inventory HTML
         run: python scripts/generate_inventory_html.py --out site/inventaire.html
 
